@@ -121,18 +121,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AppSettings.cpp" />
+    <ClCompile Include="CreationForm.cpp" />
+    <ClCompile Include="DataManipulator.cpp" />
+    <ClCompile Include="DeletionConfirmationForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="SettingsForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="CreationForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="CustomStructures.h" />
     <ClInclude Include="DataManipulator.h" />
+    <ClInclude Include="DeletionConfirmationForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="SettingsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="UIInstruments.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CreationForm.resx">
+      <DependentUpon>CreationForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeletionConfirmationForm.resx">
+      <DependentUpon>DeletionConfirmationForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

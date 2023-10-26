@@ -30,7 +30,11 @@ struct Note {
 		creationTime = time(NULL);
 	}
 	char* getTime() {
-		return ctime(&creationTime);
+		char buff[17];
+		tm* creation_tm;
+		creation_tm = localtime(&creationTime);
+		strftime(buff, sizeof(buff), "%H:%M %d.%m.%Y", creation_tm);
+		return buff;
 	}
 };
 

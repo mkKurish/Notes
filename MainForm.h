@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
 #include "DataManipulator.h"
-
-DataManipulator controller;
+#include "CreationForm.h"
+#include "AppSettings.h"
+#include "DeletionConfirmationForm.h"
+#include "SettingsForm.h"
 
 namespace Notes {
 
@@ -63,6 +65,7 @@ namespace Notes {
 
 
 
+
 	protected:
 
 	private:
@@ -119,14 +122,16 @@ namespace Notes {
 			// byDate
 			// 
 			this->byDate->Name = L"byDate";
-			this->byDate->Size = System::Drawing::Size(194, 34);
+			this->byDate->Size = System::Drawing::Size(270, 34);
 			this->byDate->Text = L"По датам";
+			this->byDate->Click += gcnew System::EventHandler(this, &MainForm::byDate_Click);
 			// 
 			// byTheme
 			// 
 			this->byTheme->Name = L"byTheme";
-			this->byTheme->Size = System::Drawing::Size(194, 34);
+			this->byTheme->Size = System::Drawing::Size(270, 34);
 			this->byTheme->Text = L"По темам";
+			this->byTheme->Click += gcnew System::EventHandler(this, &MainForm::byTheme_Click);
 			// 
 			// choosingTopics
 			// 
@@ -176,6 +181,7 @@ namespace Notes {
 			this->notesListBox->Size = System::Drawing::Size(1078, 611);
 			this->notesListBox->TabIndex = 1;
 			this->notesListBox->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &MainForm::notesListBox_DrawItem);
+			this->notesListBox->DoubleClick += gcnew System::EventHandler(this, &MainForm::notesListBox_DoubleClick);
 			this->notesListBox->Resize += gcnew System::EventHandler(this, &MainForm::notesListBox_Resize);
 			// 
 			// MainForm
@@ -197,14 +203,45 @@ namespace Notes {
 
 		}
 #pragma endregion
+	private: System::Void updateDataInNotesList() {
+		List<Tuple<String^, String^, String^, Color, String^>^>^ dataSet = gcnew List<Tuple<String^, String^, String^, Color, String^>^>();
+		if (AppSettings::getDisplayThemesMode()) {
+
+		}
+		else {
+			NotesList* notes = new NotesList(DataManipulator::getNotes());
+			for (int i = notes->getSize() - 1; i >= 0; i--) {
+				dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^>(
+					gcnew String(notes->elementAt(i).header.c_str()),
+					gcnew String(notes->elementAt(i).body.c_str()),
+					gcnew String(notes->elementAt(i).topic.name.c_str()),
+					Color::FromArgb(notes->elementAt(i).topic.colorARGB),
+					gcnew String(notes->elementAt(i).getTime())));
+			}
+		}
+		notesListBox->DataSource = dataSet;
+	}
 	private: System::Void createBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		//TODO
+		CreationForm cform;
+		cform.ShowDialog();
+		updateDataInNotesList();
 	}
 	private: System::Void deleteBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		//TODO
+		int ind = notesListBox->SelectedIndex;
+		if (ind == -1)
+			return;
+		if (AppSettings::isSafeDelete()) {
+			DeletionConfirmationForm dform;
+			if (dform.ShowDialog() != System::Windows::Forms::DialogResult::Yes) {
+				return;
+			}
+		}
+		DataManipulator::removeNote(DataManipulator::notesCount() - ind - 1);
+		updateDataInNotesList();
 	}
 	private: System::Void settingsBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		//TODO
+		SettingsForm sform;
+		sform.ShowDialog();
 	}
 	private: System::Void faqBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		//TODO
@@ -213,20 +250,13 @@ namespace Notes {
 		notesListBox->DrawMode = DrawMode::OwnerDrawVariable;
 		notesListBox->ItemHeight = 60;
 
-		List<Tuple<String^, String^, String^, Color>^>^ dataSet = gcnew List<Tuple<String^, String^, String^, Color>^>();
-		NotesList notes = controller.getNotes();
-		for (int i = 0; i < notes.getSize(); i++) {
-			Color currTopicColor = Color::FromArgb(notes.elementAt(i).topic.colorARGB);
-			dataSet->Add(gcnew Tuple<String^, String^, String^, Color>(gcnew String(notes.elementAt(i).header.c_str()),
-				gcnew String(notes.elementAt(i).body.c_str()),
-				gcnew String(notes.elementAt(i).topic.name.c_str()), currTopicColor));
-		}
-
-		notesListBox->DataSource = dataSet;
+		updateDataInNotesList();
 	}
 
 	private: System::Void notesListBox_DrawItem(System::Object^ sender, System::Windows::Forms::DrawItemEventArgs^ e) {
-		Tuple<String^, String^, String^, Color>^ dataItem = (Tuple<String^, String^, String^, Color>^)notesListBox->Items[e->Index];
+		if (e->Index == -1)
+			return;
+		Tuple<String^, String^, String^, Color, String^>^ dataItem = (Tuple<String^, String^, String^, Color, String^>^)notesListBox->Items[e->Index];
 
 		Brush^ brush;
 		Brush^ solidBrush = gcnew SolidBrush(dataItem->Item4);
@@ -243,17 +273,21 @@ namespace Notes {
 		Drawing::Font^ headerFont = gcnew Drawing::Font("Microsoft Sans Serif", 11, FontStyle::Bold);
 		Drawing::Font^ bodyFont = gcnew Drawing::Font("Microsoft Sans Serif", 9, FontStyle::Regular);
 		Drawing::Font^ topicFont = gcnew Drawing::Font("Microsoft Sans Serif", 9, FontStyle::Bold);
+		Drawing::Font^ timeFont = gcnew Drawing::Font("Microsoft Sans Serif", 9, FontStyle::Regular);
 
 		Drawing::SizeF^ headerSize = gcnew Drawing::SizeF();
 		Drawing::SizeF^ bodySize = gcnew Drawing::SizeF();
 		Drawing::SizeF^ topicSize = gcnew Drawing::SizeF();
+		Drawing::SizeF^ timeSize = gcnew Drawing::SizeF();
 		String^ simpleOneLine = gcnew String("a");
 		headerSize = e->Graphics->MeasureString(simpleOneLine, headerFont);
 		bodySize = e->Graphics->MeasureString(simpleOneLine, bodyFont);
 		topicSize = e->Graphics->MeasureString(dataItem->Item3, topicFont);
+		timeSize = e->Graphics->MeasureString(dataItem->Item5, timeFont);
 
-		Drawing::Rectangle^ bodyRect = gcnew Drawing::Rectangle(e->Bounds.Left + 10, e->Bounds.Top + 8 + headerSize->Height, notesListBox->Width - 20, bodySize->Height * 2);
 		Drawing::Rectangle^ topicRect;
+		Drawing::Rectangle^ timeRect = gcnew Drawing::Rectangle(e->Bounds.Right - timeSize->Width, e->Bounds.Top + 8 + headerSize->Height, timeSize->Width, timeSize->Height);
+		Drawing::Rectangle^ bodyRect = gcnew Drawing::Rectangle(e->Bounds.Left + 10, e->Bounds.Top + 8 + headerSize->Height, notesListBox->Width - 15 - timeSize->Width, bodySize->Height * 2);
 		if (topicSize->Width > 280)
 			topicRect = gcnew Drawing::Rectangle(e->Bounds.Right - 10 - 280, e->Bounds.Top + 4, 280 + 2, topicSize->Height + 2);
 		else {
@@ -291,15 +325,29 @@ namespace Notes {
 		e->Graphics->DrawLine(simpleLine, *leftBottom, *rightBottom);
 		e->Graphics->DrawLine(simpleLine, *leftTop, *rightTop);
 
-
-		e->Graphics->FillRectangle(solidBrush, *topicRect);
-
 		e->Graphics->DrawString(dataItem->Item1, headerFont, brush, *headerRect, headerFormat);
 		e->Graphics->DrawString(dataItem->Item2, bodyFont, brush, *bodyRect, bodyFormat);
-		e->Graphics->DrawString(dataItem->Item3, topicFont, brush, *topicRect, topicFormat);
+		e->Graphics->DrawString(dataItem->Item5, timeFont, brush, *timeRect);
+
+		if (!String::IsNullOrWhiteSpace(dataItem->Item3)) {
+			e->Graphics->FillRectangle(solidBrush, *topicRect);
+			e->Graphics->DrawString(dataItem->Item3, topicFont, brush, *topicRect, topicFormat);
+		}
 	}
 	private: System::Void notesListBox_Resize(System::Object^ sender, System::EventArgs^ e) {
 		notesListBox->Invalidate();
+	}
+	private: System::Void notesListBox_DoubleClick(System::Object^ sender, System::EventArgs^ e) {
+		if (notesListBox->SelectedIndex == -1)
+			return;
+
+		//TODO: form.showDialog()
+	}
+	private: System::Void byDate_Click(System::Object^ sender, System::EventArgs^ e) {
+		AppSettings::setDisplayThemesMode(true);
+	}
+	private: System::Void byTheme_Click(System::Object^ sender, System::EventArgs^ e) {
+		AppSettings::setDisplayThemesMode(true);
 	}
 	};
 }
