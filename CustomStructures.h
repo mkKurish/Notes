@@ -36,6 +36,17 @@ struct Note {
 		strftime(buff, 17 * sizeof(char), "%H:%M %d.%m.%Y", creation_tm);
 		return buff;
 	}
+	bool equals(Note* anotherNote) {
+		if (this->header != anotherNote->header)
+			return false;
+		if (this->body != anotherNote->body)
+			return false;
+		if (this->creationTime != anotherNote->creationTime)
+			return false;
+		if (this->topic.name != anotherNote->topic.name)
+			return false;
+		return true;
+	}
 };
 
 /*
@@ -55,7 +66,7 @@ private:
 	NotesNode* head;
 public:
 	/**
-	The default constructor, that set head of the 
+	The default constructor, that set head of the
 	list to nullptr and size of the list to 0.
 	*/
 	NotesList() {
@@ -204,16 +215,53 @@ public:
 			head = additional;
 		size++;
 	}
+	/*
+	Use to add an element (pointer to Note) in correct position by date.
+	*/
+	void add(Note* value) {
+		int i = 0;
+		NotesNode* curr = head;
+		while (i < this->size) {
+			if (curr->note->creationTime < value->creationTime)
+				break;
+			i++;
+			curr = curr->next;
+		}
+		add(value, i);
+	}
 	/**
 	Use to add an element (pointer to Note) as the last one in the list.
 	*/
-	void add(Note* value) {
+	void addLast(Note* value) {
 		add(value, size);
 	}
 	/**
 	Use to delete specified element from the list.
 	*/
 	void remove(int index) {
+		if (isEmpty() || index >= size || index < 0)
+			return;
+		NotesNode* temp = head;
+		NotesNode* prev = nullptr;
+		for (int i = 0; i < index; i++) {
+			if (i == index - 1)
+				prev = temp;
+			temp = temp->next;
+		}
+		if (prev != nullptr)
+			prev->next = temp->next;
+		if (index == 0)
+			head = temp->next;
+		delete temp;
+		size--;
+	}
+	/**
+	Use to delete specified element from the list.
+	*/
+	void remove(Note* specifiedNote) {
+		int index = indexOf(specifiedNote);
+		if (index == -1)
+			return;
 		if (isEmpty() || index >= size || index < 0)
 			return;
 		NotesNode* temp = head;
@@ -248,6 +296,22 @@ public:
 			index--;
 		}
 		return curr->note;
+	}
+	/*
+	Use to find index of Note in NotesList.
+
+	Returns -1 if the Note wasn't found.
+	*/
+	int indexOf(Note* specificNote) {
+		NotesNode* curr = head;
+		int i = 0;
+		while (curr != nullptr) {
+			if (curr->note->equals(specificNote))
+				return i;
+			curr = curr->next;
+			i++;
+		}
+		return -1;
 	}
 	/*
 	Use to get the last element of the list.
@@ -334,7 +398,7 @@ public:
 		add(value, size);
 	}
 	/**
-	Use to delete specified element from the list.
+	Use to delete specified Topic from the list.
 	*/
 	void remove(int index) {
 		if (isEmpty() || index >= size || index < 0)
@@ -354,7 +418,7 @@ public:
 		size--;
 	}
 	/*
-	Use to delete the last element from the list.
+	Use to delete the last Topic from the list.
 	*/
 	void remove() {
 		remove(size - 1);
