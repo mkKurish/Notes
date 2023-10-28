@@ -89,12 +89,13 @@ namespace Notes {
 			// 
 			// resetBtn
 			// 
-			this->resetBtn->BackColor = System::Drawing::Color::IndianRed;
-			this->resetBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->resetBtn->BackColor = System::Drawing::Color::Red;
+			this->resetBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->resetBtn->Location = System::Drawing::Point(173, 272);
+			this->resetBtn->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->resetBtn->Location = System::Drawing::Point(155, 257);
 			this->resetBtn->Name = L"resetBtn";
-			this->resetBtn->Size = System::Drawing::Size(130, 60);
+			this->resetBtn->Size = System::Drawing::Size(166, 75);
 			this->resetBtn->TabIndex = 3;
 			this->resetBtn->Text = L"—бросить настройки";
 			this->resetBtn->UseVisualStyleBackColor = false;

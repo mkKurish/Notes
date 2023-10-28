@@ -30,10 +30,10 @@ struct Note {
 		creationTime = time(NULL);
 	}
 	char* getTime() {
-		char buff[17];
+		char* buff = new char[17];
 		tm* creation_tm;
 		creation_tm = localtime(&creationTime);
-		strftime(buff, sizeof(buff), "%H:%M %d.%m.%Y", creation_tm);
+		strftime(buff, 17 * sizeof(char), "%H:%M %d.%m.%Y", creation_tm);
 		return buff;
 	}
 };
@@ -117,20 +117,20 @@ public:
 	/*
 	Use to get an element of the list at specified index.
 	*/
-	Note& elementAt(int index) {
-		if (index >= size || isEmpty())
-			return Note("Error", "Error", Topic());
+	Note* elementAt(int index) {
+		if (index >= size || isEmpty() || index < 0)
+			return new Note("Error", "Error", Topic());
 		NotesNode* curr = head;
 		while (index != 0) {
 			curr = curr->next;
 			index--;
 		}
-		return curr->note;
+		return &curr->note;
 	}
 	/*
 	Use to get the last element of the list.
 	*/
-	Note& elementLast() {
+	Note* elementLast() {
 		return elementAt(size - 1);
 	}
 	/*
@@ -239,20 +239,20 @@ public:
 	/*
 	Use to get an element of the list at specified index.
 	*/
-	Note& elementAt(int index) {
+	Note* elementAt(int index) {
 		if (index >= size || isEmpty())
-			return Note("Error", "Error", Topic());
+			return new Note("Error", "Error", Topic());
 		NotesNode* curr = head;
 		while (index != 0) {
 			curr = curr->next;
 			index--;
 		}
-		return *curr->note;
+		return curr->note;
 	}
 	/*
 	Use to get the last element of the list.
 	*/
-	Note& elementLast() {
+	Note* elementLast() {
 		return elementAt(size - 1);
 	}
 	/*
@@ -283,7 +283,7 @@ public:
 };
 
 /*
-Sigle-linked list of notes.
+Sigle-linked list of topics.
 */
 struct TopicsList {
 private:
@@ -407,37 +407,37 @@ public:
 				return curr->topic;
 			curr = curr->next;
 		}
-		return Topic();
+		return *(new Topic());
 	}
 	/*
 	Use to get an existing topic's notes list.
 	*/
-	NotesPointersList& getExistingTopicsNotesList(std::string topic) {
+	NotesPointersList* getExistingTopicsNotesList(std::string topic) {
 		Node* curr = head;
 		while (curr != nullptr) {
 			if (curr->topic.name == topic)
-				return curr->notes;
+				return &curr->notes;
 			curr = curr->next;
 		}
-		return NotesPointersList();
+		return new NotesPointersList();
 	}
 	/*
 	Use to get an element of the list at specified index.
 	*/
-	NotesPointersList& topicNotesListAt(int index) {
+	NotesPointersList* topicNotesListAt(int index) {
 		if (index >= size || isEmpty())
-			return NotesPointersList();
+			return new NotesPointersList();
 		Node* curr = head;
 		while (index != 0) {
 			curr = curr->next;
 			index--;
 		}
-		return curr->notes;
+		return &curr->notes;
 	}
 	/*
 	Use to get the last element of the list.
 	*/
-	NotesPointersList& lastTopicNotesList() {
+	NotesPointersList* lastTopicNotesList() {
 		return topicNotesListAt(size - 1);
 	}
 	/*

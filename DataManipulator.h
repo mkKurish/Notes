@@ -5,17 +5,17 @@ struct DataManipulator {
 private:
 	static NotesList mainData;
 	static TopicsList topicsData;
-	static void setTopicToNote(Note& note, Topic topic) {
+	static void setTopicToNote(Note* note, Topic topic) {
 		if (topicsData.isTopicExists(topic.name)) {
-			topicsData.getExistingTopicsNotesList(topic.name).add(&note);
+			topicsData.getExistingTopicsNotesList(topic.name)->add(note);
 			topicsData.getExistingTopic(topic.name).colorARGB = topic.colorARGB;
-			for (int i = 0; i < topicsData.getExistingTopicsNotesList(topic.name).getSize(); i++) {
-				topicsData.getExistingTopicsNotesList(topic.name).elementAt(i).topic.colorARGB = topic.colorARGB;
+			for (int i = 0; i < topicsData.getExistingTopicsNotesList(topic.name)->getSize(); i++) {
+				topicsData.getExistingTopicsNotesList(topic.name)->elementAt(i)->topic.colorARGB = topic.colorARGB;
 			}
 		}
 		else {
 			topicsData.add(topic);
-			topicsData.lastTopicNotesList().add(&note);
+			topicsData.lastTopicNotesList()->add(note);
 		}
 	}
 public:
@@ -40,18 +40,18 @@ public:
 		}
 	}
 	static void changeNote(int index, Note newValues) {
-		mainData.elementAt(index).header = newValues.header;
-		mainData.elementAt(index).body = newValues.body;
-		mainData.elementAt(index).topic = newValues.topic;
+		mainData.elementAt(index)->header = newValues.header;
+		mainData.elementAt(index)->body = newValues.body;
+		mainData.elementAt(index)->topic = newValues.topic;
 	}
 	static void removeNote(int index) {
 		mainData.remove(index);
 	}
-	static NotesList getNotes() {
-		return mainData;
+	static NotesList* getNotes() {
+		return &mainData;
 	}
-	static TopicsList getTopics() {
-		return topicsData;
+	static TopicsList* getTopics() {
+		return &topicsData;
 	}
 	static int notesCount() {
 		return mainData.getSize();

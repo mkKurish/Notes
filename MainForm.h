@@ -5,6 +5,7 @@
 #include "AppSettings.h"
 #include "DeletionConfirmationForm.h"
 #include "SettingsForm.h"
+#include "ChangingForm.h"
 
 namespace Notes {
 
@@ -209,17 +210,23 @@ namespace Notes {
 
 		}
 		else {
-			NotesList* notes = new NotesList(DataManipulator::getNotes());
+			NotesList* notes = DataManipulator::getNotes();
 			for (int i = notes->getSize() - 1; i >= 0; i--) {
 				dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^>(
-					gcnew String(notes->elementAt(i).header.c_str()),
-					gcnew String(notes->elementAt(i).body.c_str()),
-					gcnew String(notes->elementAt(i).topic.name.c_str()),
-					Color::FromArgb(notes->elementAt(i).topic.colorARGB),
-					gcnew String(notes->elementAt(i).getTime())));
+					gcnew String(notes->elementAt(i)->header.c_str()),
+					gcnew String(notes->elementAt(i)->body.c_str()),
+					gcnew String(notes->elementAt(i)->topic.name.c_str()),
+					Color::FromArgb(notes->elementAt(i)->topic.colorARGB),
+					gcnew String(notes->elementAt(i)->getTime())));
 			}
 		}
+		int lastSelectedIndex = notesListBox->SelectedIndex;
 		notesListBox->DataSource = dataSet;
+		if (lastSelectedIndex != -1) {
+			if (lastSelectedIndex >= notesListBox->Items->Count)
+				lastSelectedIndex = notesListBox->Items->Count - 1;
+			notesListBox->SelectedIndex = lastSelectedIndex;
+		}
 	}
 	private: System::Void createBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		CreationForm cform;
@@ -286,10 +293,13 @@ namespace Notes {
 		timeSize = e->Graphics->MeasureString(dataItem->Item5, timeFont);
 
 		Drawing::Rectangle^ topicRect;
-		Drawing::Rectangle^ timeRect = gcnew Drawing::Rectangle(e->Bounds.Right - timeSize->Width, e->Bounds.Top + 8 + headerSize->Height, timeSize->Width, timeSize->Height);
+		Drawing::Rectangle^ timeRect = gcnew Drawing::Rectangle(e->Bounds.Right - timeSize->Width, e->Bounds.Top + 8 + headerSize->Height, timeSize->Width + 2, timeSize->Height);
 		Drawing::Rectangle^ bodyRect = gcnew Drawing::Rectangle(e->Bounds.Left + 10, e->Bounds.Top + 8 + headerSize->Height, notesListBox->Width - 15 - timeSize->Width, bodySize->Height * 2);
 		if (topicSize->Width > 280)
 			topicRect = gcnew Drawing::Rectangle(e->Bounds.Right - 10 - 280, e->Bounds.Top + 4, 280 + 2, topicSize->Height + 2);
+		else if (topicSize->Width < 100) {
+			topicRect = gcnew Drawing::Rectangle(e->Bounds.Right - 10 - 100, e->Bounds.Top + 4, 100 + 2, topicSize->Height + 2);
+		}
 		else {
 			topicRect = gcnew Drawing::Rectangle(e->Bounds.Right - 10 - topicSize->Width, e->Bounds.Top + 4, topicSize->Width + 2, topicSize->Height + 2);
 		}
@@ -340,8 +350,10 @@ namespace Notes {
 	private: System::Void notesListBox_DoubleClick(System::Object^ sender, System::EventArgs^ e) {
 		if (notesListBox->SelectedIndex == -1)
 			return;
-
-		//TODO: form.showDialog()
+		ChangingForm chform;
+		chform.selectedIndex = DataManipulator::notesCount() - notesListBox->SelectedIndex - 1;
+		chform.ShowDialog();
+		updateDataInNotesList();
 	}
 	private: System::Void byDate_Click(System::Object^ sender, System::EventArgs^ e) {
 		AppSettings::setDisplayThemesMode(true);

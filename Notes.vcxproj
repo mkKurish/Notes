@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppSettings.cpp" />
+    <ClCompile Include="ChangingForm.cpp" />
     <ClCompile Include="CreationForm.cpp" />
     <ClCompile Include="DataManipulator.cpp" />
     <ClCompile Include="DeletionConfirmationForm.cpp" />
@@ -130,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="ChangingForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="CreationForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -147,6 +151,9 @@
     <ClInclude Include="UIInstruments.h" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChangingForm.resx">
+      <DependentUpon>ChangingForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreationForm.resx">
       <DependentUpon>CreationForm.h</DependentUpon>
     </EmbeddedResource>

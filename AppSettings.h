@@ -13,7 +13,7 @@ public:
 	static void loadSettings() {
 		//TODO: if () ... load from file
 		// else
-		safeDelete = true;
+		defaultSettings();
 	}
 	static void saveSettings() {
 		//TODO
