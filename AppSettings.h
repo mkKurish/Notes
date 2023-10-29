@@ -66,5 +66,9 @@ public:
 			}
 		}
 	}
+	static void unselectAllTopics() {
+		selectedTopics = nullptr;
+		countOfSelectedTopics = 0;
+	}
 	static int getCountOfSelectedTopics() { return countOfSelectedTopics; }
 };

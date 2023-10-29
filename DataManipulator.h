@@ -55,9 +55,9 @@ public:
 	}
 	static void removeNote(int index) {
 		Note* deletingNote = mainData.elementAt(index);
-		if (topicsData.isTopicExists(deletingNote->topic.name)) {
-			topicsData.getExistingTopicsNotesList(deletingNote->topic.name)->remove(deletingNote);
-		}
+		topicsData.getExistingTopicsNotesList(deletingNote->topic.name)->remove(deletingNote);
+		if (topicsData.getExistingTopicsNotesList(deletingNote->topic.name)->getSize() == 0)
+			topicsData.removeByTopic(deletingNote->topic);
 		mainData.remove(index);
 	}
 	static NotesList* getNotes() {

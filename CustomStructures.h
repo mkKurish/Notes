@@ -443,6 +443,7 @@ public:
 				else
 					head = curr->next;
 				delete curr;
+				size--;
 				return;
 			}
 			prev = curr;
