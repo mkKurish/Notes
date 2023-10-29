@@ -205,19 +205,41 @@ namespace Notes {
 		}
 #pragma endregion
 	private: System::Void updateDataInNotesList() {
-		List<Tuple<String^, String^, String^, Color, String^>^>^ dataSet = gcnew List<Tuple<String^, String^, String^, Color, String^>^>();
+		// Tuple of next values: header, body, topic name, topic color, time, index in mainList
+		List<Tuple<String^, String^, String^, Color, String^, int>^>^ dataSet = gcnew List<Tuple<String^, String^, String^, Color, String^, int>^>();
 		if (AppSettings::getDisplayThemesMode()) {
-
+			TopicsList* topics = DataManipulator::getTopics();
+			for (int i = topics->getSize() - 1; i >= 0 ; i--) {
+				NotesPointersList* notes = topics->topicNotesListAt(i);
+				for (int j = notes->getSize() - 1; j >= 0; j--) {
+					Note* curNote = notes->elementAt(j);
+					if (AppSettings::topicIsSelected(curNote->topic.name) ||
+						AppSettings::getCountOfSelectedTopics() == 0) {
+						dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^, int>(
+							gcnew String(curNote->header.c_str()),
+							gcnew String(curNote->body.c_str()),
+							gcnew String(curNote->topic.name.c_str()),
+							Color::FromArgb(curNote->topic.colorARGB),
+							gcnew String(curNote->getTime()),
+							curNote->indexInMainList));
+					}
+				}
+			}
 		}
 		else {
 			NotesList* notes = DataManipulator::getNotes();
 			for (int i = notes->getSize() - 1; i >= 0; i--) {
-				dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^>(
-					gcnew String(notes->elementAt(i)->header.c_str()),
-					gcnew String(notes->elementAt(i)->body.c_str()),
-					gcnew String(notes->elementAt(i)->topic.name.c_str()),
-					Color::FromArgb(notes->elementAt(i)->topic.colorARGB),
-					gcnew String(notes->elementAt(i)->getTime())));
+				Note* curNote = notes->elementAt(i);
+				if (AppSettings::topicIsSelected(curNote->topic.name) ||
+					AppSettings::getCountOfSelectedTopics() == 0) {
+					dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^, int>(
+						gcnew String(curNote->header.c_str()),
+						gcnew String(curNote->body.c_str()),
+						gcnew String(curNote->topic.name.c_str()),
+						Color::FromArgb(curNote->topic.colorARGB),
+						gcnew String(curNote->getTime()),
+						curNote->indexInMainList));
+				}
 			}
 		}
 		int lastSelectedIndex = notesListBox->SelectedIndex;
@@ -243,7 +265,8 @@ namespace Notes {
 				return;
 			}
 		}
-		DataManipulator::removeNote(DataManipulator::notesCount() - ind - 1);
+		ind = ((Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[notesListBox->SelectedIndex])->Item6;
+		DataManipulator::removeNote(ind);
 		updateDataInNotesList();
 	}
 	private: System::Void settingsBtn_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -263,7 +286,7 @@ namespace Notes {
 	private: System::Void notesListBox_DrawItem(System::Object^ sender, System::Windows::Forms::DrawItemEventArgs^ e) {
 		if (e->Index == -1)
 			return;
-		Tuple<String^, String^, String^, Color, String^>^ dataItem = (Tuple<String^, String^, String^, Color, String^>^)notesListBox->Items[e->Index];
+		Tuple<String^, String^, String^, Color, String^, int>^ dataItem = (Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[e->Index];
 
 		Brush^ brush;
 		Brush^ solidBrush = gcnew SolidBrush(dataItem->Item4);
@@ -351,15 +374,17 @@ namespace Notes {
 		if (notesListBox->SelectedIndex == -1)
 			return;
 		ChangingForm chform;
-		chform.selectedIndex = DataManipulator::notesCount() - notesListBox->SelectedIndex - 1;
+		chform.selectedIndex = ((Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[notesListBox->SelectedIndex])->Item6;
 		chform.ShowDialog();
 		updateDataInNotesList();
 	}
 	private: System::Void byDate_Click(System::Object^ sender, System::EventArgs^ e) {
-		AppSettings::setDisplayThemesMode(true);
+		AppSettings::setDisplayThemesMode(false);
+		updateDataInNotesList();
 	}
 	private: System::Void byTheme_Click(System::Object^ sender, System::EventArgs^ e) {
 		AppSettings::setDisplayThemesMode(true);
+		updateDataInNotesList();
 	}
 	};
 }

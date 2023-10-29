@@ -20,13 +20,15 @@ struct Note {
 	std::string body;
 	Topic topic;
 	time_t creationTime;
+	int indexInMainList;
 	Note() {
 		creationTime = time(NULL);
 	}
-	Note(std::string header, std::string body, Topic topic) {
+	Note(std::string header, std::string body, Topic topic, int mainIndex = -1) {
 		this->header = header;
 		this->body = body;
 		this->topic = topic;
+		this->indexInMainList = mainIndex;
 		creationTime = time(NULL);
 	}
 	char* getTime() {
@@ -116,6 +118,11 @@ public:
 			prev->next = temp->next;
 		if (index == 0)
 			head = temp->next;
+		NotesNode* allNext = temp->next;
+		while (allNext != nullptr) {
+			allNext->note.indexInMainList--;
+			allNext = allNext->next;
+		}
 		delete temp;
 		size--;
 	}

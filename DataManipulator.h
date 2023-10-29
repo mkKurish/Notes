@@ -5,13 +5,16 @@ struct DataManipulator {
 private:
 	static NotesList mainData;
 	static TopicsList topicsData;
+	static void updateTopicsColor(Topic topic) {
+		for (int i = 0; i < topicsData.getExistingTopicsNotesList(topic.name)->getSize(); i++) {
+			topicsData.getExistingTopicsNotesList(topic.name)->elementAt(i)->topic.colorARGB = topic.colorARGB;
+		}
+	}
 	static void setTopicToNote(Note* note, Topic topic) {
 		if (topicsData.isTopicExists(topic.name)) {
 			topicsData.getExistingTopicsNotesList(topic.name)->add(note);
 			topicsData.getExistingTopic(topic.name).colorARGB = topic.colorARGB;
-			for (int i = 0; i < topicsData.getExistingTopicsNotesList(topic.name)->getSize(); i++) {
-				topicsData.getExistingTopicsNotesList(topic.name)->elementAt(i)->topic.colorARGB = topic.colorARGB;
-			}
+			updateTopicsColor(topic);
 		}
 		else {
 			topicsData.add(topic);
@@ -21,7 +24,7 @@ private:
 public:
 	static void loadData() {
 		//TODO get data from files
-		addNote(Note("Header of this note1", "Some text\nmaybe some other text", 
+		addNote(Note("Header of this note1", "Some text\nmaybe some other text",
 			Topic("Short topic", System::Drawing::Color::CadetBlue.ToArgb())));
 		addNote(Note("Header of this note2", "Some text, but very-veryy long. C++ was designed with systems programming and embedded, resource-constrained software and large systems in mind, with performance, efficiency, and flexibility of use as its design highlights.\nIn 1982, Stroustrup started to develop a successor to C with Classes.",
 			Topic("Short topic", System::Drawing::Color::HotPink.ToArgb())));
@@ -34,24 +37,21 @@ public:
 		//TODO saving data to files
 	}
 	static void addNote(Note note) {
+		note.indexInMainList = mainData.getSize();
 		mainData.add(note);
 		setTopicToNote(mainData.elementLast(), note.topic);
 	}
 	static void changeNote(int index, Note newValues) {
 		Note* changingNote = mainData.elementAt(index);
 		if (newValues.topic.name != changingNote->topic.name) {
-			for (int i = 0; i < topicsData.getSize(); i++) {
-				if (topicsData.topicAt(i).name == changingNote->topic.name) {
-					topicsData.getExistingTopicsNotesList(changingNote->topic.name)->remove(changingNote);
-					break;
-				}
-			}
+			topicsData.getExistingTopicsNotesList(changingNote->topic.name)->remove(changingNote);
 			changingNote->topic.name = newValues.topic.name;
+			setTopicToNote(changingNote, changingNote->topic);
 		}
 		changingNote->topic.colorARGB = newValues.topic.colorARGB;
 		changingNote->header = newValues.header;
 		changingNote->body = newValues.body;
-		setTopicToNote(changingNote, changingNote->topic);
+		updateTopicsColor(changingNote->topic);
 	}
 	static void removeNote(int index) {
 		Note* deletingNote = mainData.elementAt(index);
