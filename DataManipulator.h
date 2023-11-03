@@ -9,6 +9,7 @@ private:
 		for (int i = 0; i < topicsData.getExistingTopicsNotesList(topic.name)->getSize(); i++) {
 			topicsData.getExistingTopicsNotesList(topic.name)->elementAt(i)->topic.colorARGB = topic.colorARGB;
 		}
+		topicsData.getExistingTopic(topic.name).colorARGB = topic.colorARGB;
 	}
 	static void setTopicToNote(Note* note, Topic topic) {
 		if (topicsData.isTopicExists(topic.name)) {

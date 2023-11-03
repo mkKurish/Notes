@@ -2,6 +2,7 @@
 #include <msclr/marshal_cppstd.h>
 #include "DataManipulator.h"
 #include "UIInstruments.h"
+#include "AppSettings.h"
 
 namespace Notes {
 
@@ -39,12 +40,16 @@ namespace Notes {
 			}
 		}
 	private: System::Windows::Forms::Button^ colorpickerBtn;
+	private: System::Windows::Forms::Label^ labelColor;
 	protected:
-	private: System::Windows::Forms::Label^ label4;
+
 	private: System::Windows::Forms::RichTextBox^ bodyTextBox;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ labelBody;
+
+	private: System::Windows::Forms::Label^ labelTopic;
+
+	private: System::Windows::Forms::Label^ labelHeader;
+
 	private: System::Windows::Forms::Button^ confirmationBtn;
 
 	private: System::Windows::Forms::Button^ cancelBnt;
@@ -66,11 +71,11 @@ namespace Notes {
 		void InitializeComponent(void)
 		{
 			this->colorpickerBtn = (gcnew System::Windows::Forms::Button());
-			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->labelColor = (gcnew System::Windows::Forms::Label());
 			this->bodyTextBox = (gcnew System::Windows::Forms::RichTextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->labelBody = (gcnew System::Windows::Forms::Label());
+			this->labelTopic = (gcnew System::Windows::Forms::Label());
+			this->labelHeader = (gcnew System::Windows::Forms::Label());
 			this->confirmationBtn = (gcnew System::Windows::Forms::Button());
 			this->cancelBnt = (gcnew System::Windows::Forms::Button());
 			this->topicTextBox = (gcnew System::Windows::Forms::TextBox());
@@ -81,6 +86,7 @@ namespace Notes {
 			// colorpickerBtn
 			// 
 			this->colorpickerBtn->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->colorpickerBtn->AutoSize = true;
 			this->colorpickerBtn->BackColor = System::Drawing::SystemColors::ControlDark;
 			this->colorpickerBtn->Enabled = false;
 			this->colorpickerBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -93,18 +99,18 @@ namespace Notes {
 			this->colorpickerBtn->UseVisualStyleBackColor = false;
 			this->colorpickerBtn->Click += gcnew System::EventHandler(this, &ChangingForm::colorpickerBtn_Click);
 			// 
-			// label4
+			// labelColor
 			// 
-			this->label4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelColor->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->labelColor->AutoSize = true;
+			this->labelColor->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label4->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label4->Location = System::Drawing::Point(585, 91);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(59, 25);
-			this->label4->TabIndex = 19;
-			this->label4->Text = L"Цвет";
+			this->labelColor->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelColor->Location = System::Drawing::Point(585, 91);
+			this->labelColor->Name = L"labelColor";
+			this->labelColor->Size = System::Drawing::Size(59, 25);
+			this->labelColor->TabIndex = 19;
+			this->labelColor->Text = L"Цвет";
 			// 
 			// bodyTextBox
 			// 
@@ -122,45 +128,46 @@ namespace Notes {
 			this->bodyTextBox->Enter += gcnew System::EventHandler(this, &ChangingForm::bodyTextBox_Enter);
 			this->bodyTextBox->Leave += gcnew System::EventHandler(this, &ChangingForm::bodyTextBox_Leave);
 			// 
-			// label3
+			// labelBody
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelBody->AutoSize = true;
+			this->labelBody->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label3->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label3->Location = System::Drawing::Point(39, 169);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(130, 25);
-			this->label3->TabIndex = 17;
-			this->label3->Text = L"Содержание";
+			this->labelBody->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelBody->Location = System::Drawing::Point(39, 169);
+			this->labelBody->Name = L"labelBody";
+			this->labelBody->Size = System::Drawing::Size(130, 25);
+			this->labelBody->TabIndex = 17;
+			this->labelBody->Text = L"Содержание";
 			// 
-			// label2
+			// labelTopic
 			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelTopic->AutoSize = true;
+			this->labelTopic->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label2->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label2->Location = System::Drawing::Point(39, 91);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(62, 25);
-			this->label2->TabIndex = 16;
-			this->label2->Text = L"Тема";
+			this->labelTopic->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelTopic->Location = System::Drawing::Point(39, 91);
+			this->labelTopic->Name = L"labelTopic";
+			this->labelTopic->Size = System::Drawing::Size(62, 25);
+			this->labelTopic->TabIndex = 16;
+			this->labelTopic->Text = L"Тема";
 			// 
-			// label1
+			// labelHeader
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelHeader->AutoSize = true;
+			this->labelHeader->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label1->Location = System::Drawing::Point(39, 13);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(108, 25);
-			this->label1->TabIndex = 15;
-			this->label1->Text = L"Заголовок";
+			this->labelHeader->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelHeader->Location = System::Drawing::Point(40, 0);
+			this->labelHeader->Name = L"labelHeader";
+			this->labelHeader->Size = System::Drawing::Size(108, 25);
+			this->labelHeader->TabIndex = 15;
+			this->labelHeader->Text = L"Заголовок";
 			// 
 			// confirmationBtn
 			// 
 			this->confirmationBtn->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->confirmationBtn->AutoSize = true;
 			this->confirmationBtn->BackColor = System::Drawing::SystemColors::Control;
 			this->confirmationBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -175,6 +182,7 @@ namespace Notes {
 			// cancelBnt
 			// 
 			this->cancelBnt->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->cancelBnt->AutoSize = true;
 			this->cancelBnt->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->cancelBnt->Location = System::Drawing::Point(12, 573);
@@ -204,7 +212,7 @@ namespace Notes {
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->headerTextBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->headerTextBox->Location = System::Drawing::Point(40, 41);
+			this->headerTextBox->Location = System::Drawing::Point(40, 45);
 			this->headerTextBox->Name = L"headerTextBox";
 			this->headerTextBox->Size = System::Drawing::Size(600, 35);
 			this->headerTextBox->TabIndex = 11;
@@ -221,11 +229,11 @@ namespace Notes {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(678, 644);
 			this->Controls->Add(this->colorpickerBtn);
-			this->Controls->Add(this->label4);
+			this->Controls->Add(this->labelColor);
 			this->Controls->Add(this->bodyTextBox);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
+			this->Controls->Add(this->labelBody);
+			this->Controls->Add(this->labelTopic);
+			this->Controls->Add(this->labelHeader);
 			this->Controls->Add(this->confirmationBtn);
 			this->Controls->Add(this->cancelBnt);
 			this->Controls->Add(this->topicTextBox);
@@ -251,7 +259,7 @@ namespace Notes {
 
 		setHintToTextBox(bodyTextBox, "Введите содержание", Color::Gray);
 
-		if (! String::IsNullOrWhiteSpace(topicTextBox->Text)) {
+		if (!String::IsNullOrWhiteSpace(topicTextBox->Text)) {
 			if (colorpickerBtn->BackColor == SystemColors::ControlDark)
 				colorpickerBtn->BackColor = SystemColors::Control;
 			colorpickerBtn->Enabled = true;
@@ -261,7 +269,7 @@ namespace Notes {
 	}
 	private: System::Void colorpickerBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (colorDialog1->ShowDialog() != System::Windows::Forms::DialogResult::Cancel)
-		//if (colorDialog1->Color != Drawing::Color::Black) {
+			//if (colorDialog1->Color != Drawing::Color::Black) {
 			colorpickerBtn->BackColor = colorDialog1->Color;
 		//}
 	}
@@ -318,5 +326,5 @@ namespace Notes {
 		DataManipulator::changeNote(selectedIndex, Note(header, body, Topic(topic, colorpickerBtn->BackColor.ToArgb())));
 		this->Close();
 	}
-	};
+};
 }

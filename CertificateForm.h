@@ -63,6 +63,7 @@ namespace Notes {
 			// returnBtn
 			// 
 			this->returnBtn->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->returnBtn->AutoSize = true;
 			this->returnBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->returnBtn->Location = System::Drawing::Point(12, 375);
@@ -100,6 +101,7 @@ namespace Notes {
 			this->Text = L"CertificateForm";
 			this->Load += gcnew System::EventHandler(this, &CertificateForm::CertificateForm_Load);
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion

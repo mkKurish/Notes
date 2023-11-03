@@ -110,7 +110,7 @@ namespace Notes {
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1078, 33);
+			this->menuStrip1->Size = System::Drawing::Size(1078, 36);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -120,8 +120,10 @@ namespace Notes {
 				this->byDate,
 					this->byTheme
 			});
+			this->displayMode->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->displayMode->Name = L"displayMode";
-			this->displayMode->Size = System::Drawing::Size(141, 29);
+			this->displayMode->Size = System::Drawing::Size(156, 32);
 			this->displayMode->Text = L"Отображение";
 			// 
 			// byDate
@@ -130,7 +132,7 @@ namespace Notes {
 			this->byDate->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->byDate->Name = L"byDate";
 			this->byDate->ShowShortcutKeys = false;
-			this->byDate->Size = System::Drawing::Size(270, 34);
+			this->byDate->Size = System::Drawing::Size(189, 36);
 			this->byDate->Text = L"По датам";
 			this->byDate->Click += gcnew System::EventHandler(this, &MainForm::byDate_Click);
 			// 
@@ -138,27 +140,33 @@ namespace Notes {
 			// 
 			this->byTheme->Name = L"byTheme";
 			this->byTheme->ShowShortcutKeys = false;
-			this->byTheme->Size = System::Drawing::Size(270, 34);
+			this->byTheme->Size = System::Drawing::Size(189, 36);
 			this->byTheme->Text = L"По темам";
 			this->byTheme->Click += gcnew System::EventHandler(this, &MainForm::byTheme_Click);
 			// 
 			// choosingTopics
 			// 
+			this->choosingTopics->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->choosingTopics->Name = L"choosingTopics";
-			this->choosingTopics->Size = System::Drawing::Size(117, 29);
+			this->choosingTopics->Size = System::Drawing::Size(126, 32);
 			this->choosingTopics->Text = L"Выбор тем";
 			// 
 			// createBtn
 			// 
+			this->createBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->createBtn->Name = L"createBtn";
-			this->createBtn->Size = System::Drawing::Size(93, 29);
+			this->createBtn->Size = System::Drawing::Size(100, 32);
 			this->createBtn->Text = L"Создать";
 			this->createBtn->Click += gcnew System::EventHandler(this, &MainForm::createBtn_Click);
 			// 
 			// deleteBtn
 			// 
+			this->deleteBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->deleteBtn->Name = L"deleteBtn";
-			this->deleteBtn->Size = System::Drawing::Size(92, 29);
+			this->deleteBtn->Size = System::Drawing::Size(101, 32);
 			this->deleteBtn->Text = L"Удалить";
 			this->deleteBtn->Click += gcnew System::EventHandler(this, &MainForm::deleteBtn_Click);
 			// 
@@ -167,7 +175,7 @@ namespace Notes {
 			this->faqBtn->Alignment = System::Windows::Forms::ToolStripItemAlignment::Right;
 			this->faqBtn->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"faqBtn.Image")));
 			this->faqBtn->Name = L"faqBtn";
-			this->faqBtn->Size = System::Drawing::Size(40, 29);
+			this->faqBtn->Size = System::Drawing::Size(40, 32);
 			this->faqBtn->Click += gcnew System::EventHandler(this, &MainForm::faqBtn_Click);
 			// 
 			// settingsBtn
@@ -175,21 +183,24 @@ namespace Notes {
 			this->settingsBtn->Alignment = System::Windows::Forms::ToolStripItemAlignment::Right;
 			this->settingsBtn->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsBtn.Image")));
 			this->settingsBtn->Name = L"settingsBtn";
-			this->settingsBtn->Size = System::Drawing::Size(40, 29);
+			this->settingsBtn->Size = System::Drawing::Size(40, 32);
 			this->settingsBtn->Click += gcnew System::EventHandler(this, &MainForm::settingsBtn_Click);
 			// 
 			// notesListBox
 			// 
 			this->notesListBox->BackColor = System::Drawing::SystemColors::Window;
+			this->notesListBox->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->notesListBox->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->notesListBox->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
+			this->notesListBox->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawVariable;
 			this->notesListBox->FormattingEnabled = true;
+			this->notesListBox->IntegralHeight = false;
 			this->notesListBox->ItemHeight = 20;
-			this->notesListBox->Location = System::Drawing::Point(0, 33);
+			this->notesListBox->Location = System::Drawing::Point(0, 36);
 			this->notesListBox->Name = L"notesListBox";
-			this->notesListBox->Size = System::Drawing::Size(1078, 611);
+			this->notesListBox->Size = System::Drawing::Size(1078, 608);
 			this->notesListBox->TabIndex = 1;
 			this->notesListBox->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &MainForm::notesListBox_DrawItem);
+			this->notesListBox->MeasureItem += gcnew System::Windows::Forms::MeasureItemEventHandler(this, &MainForm::notesListBox_MeasureItem);
 			this->notesListBox->DoubleClick += gcnew System::EventHandler(this, &MainForm::notesListBox_DoubleClick);
 			this->notesListBox->Resize += gcnew System::EventHandler(this, &MainForm::notesListBox_Resize);
 			// 
@@ -200,6 +211,7 @@ namespace Notes {
 			this->ClientSize = System::Drawing::Size(1078, 644);
 			this->Controls->Add(this->notesListBox);
 			this->Controls->Add(this->menuStrip1);
+			this->DoubleBuffered = true;
 			this->MainMenuStrip = this->menuStrip1;
 			this->MinimumSize = System::Drawing::Size(1100, 700);
 			this->Name = L"MainForm";
@@ -212,6 +224,16 @@ namespace Notes {
 
 		}
 #pragma endregion
+	private: System::Void updateMenuFontSize() {
+		this->displayMode->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(204)));
+		this->choosingTopics->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(204)));
+		this->createBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(204)));
+		this->deleteBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			static_cast<System::Byte>(204)));
+	}
 	private: System::Void updateDataInNotesList() {
 		choosingTopics->DropDownItems->Clear();
 		choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String("Очистить выбор")));
@@ -220,7 +242,15 @@ namespace Notes {
 		for (int i = topicsForMenu->getSize() - 1; i >= 0; i--) {
 			int realIndex = topicsForMenu->getSize() - i;
 			std::string topicName = topicsForMenu->topicAt(i).name;
-			choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String(topicName.c_str())));
+			Drawing::Image^ colorImg = gcnew Drawing::Bitmap(3, 3);
+			Graphics^ imgGraphics = Graphics::FromImage(colorImg);
+			imgGraphics->FillRectangle(gcnew SolidBrush(Color::FromArgb(topicsForMenu->topicAt(i).colorARGB)), 0, 0, 3, 3);
+			if (topicName != "")
+				choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String(topicName.c_str()), colorImg));
+			else {
+				imgGraphics->FillRectangle(gcnew SolidBrush(Color::Black), 0, 0, 3, 3);
+				choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String("-без темы-"), colorImg));
+			}
 			choosingTopics->DropDownItems[realIndex]->Click += gcnew System::EventHandler(this, &MainForm::choosingTopicsItem_Click);
 			((ToolStripMenuItem^)choosingTopics->DropDownItems[realIndex])->Checked = AppSettings::topicIsSelected(topicName);
 		}
@@ -292,15 +322,15 @@ namespace Notes {
 		SettingsForm sform;
 		sform.ShowDialog();
 		updateDataInNotesList();
+		updateMenuFontSize();
 	}
 	private: System::Void faqBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		CertificateForm cfform;
 		cfform.ShowDialog();
 	}
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		notesListBox->DrawMode = DrawMode::OwnerDrawFixed;
-		notesListBox->ItemHeight = 60;
-
+		//notesListBox->DrawMode = DrawMode::OwnerDrawFixed;
+		//notesListBox->ItemHeight = 60;
 		updateDataInNotesList();
 	}
 
@@ -309,8 +339,10 @@ namespace Notes {
 			return;
 		Tuple<String^, String^, String^, Color, String^, int>^ dataItem = (Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[e->Index];
 
+		Color topicColor = dataItem->Item4;
+
 		Brush^ brush;
-		Brush^ solidBrush = gcnew SolidBrush(dataItem->Item4);
+		Brush^ solidBrush = gcnew SolidBrush(topicColor);
 
 		if ((e->State & DrawItemState::Selected) == DrawItemState::Selected) {
 			e = gcnew DrawItemEventArgs(e->Graphics, e->Font, e->Bounds,
@@ -349,7 +381,6 @@ namespace Notes {
 		}
 		Drawing::RectangleF^ headerRect = gcnew Drawing::RectangleF(e->Bounds.Left + 10, e->Bounds.Top + 4, notesListBox->Width - 40 - topicRect->Width, headerSize->Height);
 
-
 		Drawing::StringFormat^ topicFormat = gcnew Drawing::StringFormat();
 		topicFormat->Alignment = StringAlignment::Center;
 		topicFormat->LineAlignment = StringAlignment::Center;
@@ -385,8 +416,21 @@ namespace Notes {
 
 		if (!String::IsNullOrWhiteSpace(dataItem->Item3)) {
 			e->Graphics->FillRectangle(solidBrush, *topicRect);
-			e->Graphics->DrawString(dataItem->Item3, topicFont, brush, *topicRect, topicFormat);
+			if (topicColor.GetBrightness() < 0.4)
+				e->Graphics->DrawString(dataItem->Item3, topicFont, Brushes::White, *topicRect, topicFormat);
+			else
+				e->Graphics->DrawString(dataItem->Item3, topicFont, Brushes::Black, *topicRect, topicFormat);
 		}
+	}
+	private: System::Void notesListBox_MeasureItem(System::Object^ sender, System::Windows::Forms::MeasureItemEventArgs^ e) {
+		Drawing::Font^ headerFont = gcnew Drawing::Font("Microsoft Sans Serif", 11, FontStyle::Bold);
+		Drawing::Font^ bodyFont = gcnew Drawing::Font("Microsoft Sans Serif", 9, FontStyle::Regular);
+		Drawing::SizeF^ headerSize = gcnew Drawing::SizeF();
+		Drawing::SizeF^ bodySize = gcnew Drawing::SizeF();
+		String^ simpleOneLine = gcnew String("a");
+		headerSize = e->Graphics->MeasureString(simpleOneLine, headerFont);
+		bodySize = e->Graphics->MeasureString(simpleOneLine, bodyFont);
+		e->ItemHeight = 4 + headerSize->Height + 4 + bodySize->Height * 2 + 4;
 	}
 	private: System::Void notesListBox_Resize(System::Object^ sender, System::EventArgs^ e) {
 		notesListBox->Invalidate();
@@ -414,6 +458,8 @@ namespace Notes {
 	private: System::Void choosingTopicsItem_Click(System::Object^ sender, System::EventArgs^ e) {
 		ToolStripMenuItem^ realSender = (ToolStripMenuItem^)sender;
 		std::string topic = msclr::interop::marshal_as<std::string>(realSender->Text);
+		if (topic == "-без темы-" && Bitmap(realSender->Image).GetPixel(0, 0).ToArgb() == Color::Black.ToArgb())
+			topic = "";
 		if (AppSettings::topicIsSelected(topic)) {
 			AppSettings::unselectTopic(topic);
 			realSender->Checked = false;

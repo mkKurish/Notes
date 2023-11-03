@@ -35,11 +35,16 @@ namespace Notes {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^ label1;
+
+	protected:
+
 	private: System::Windows::Forms::CheckBox^ checkBoxSafeDeletion;
 
 
 	private: System::Windows::Forms::Button^ resetBtn;
+
+
+
 
 	protected:
 
@@ -57,31 +62,18 @@ namespace Notes {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->checkBoxSafeDeletion = (gcnew System::Windows::Forms::CheckBox());
 			this->resetBtn = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label1->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label1->Location = System::Drawing::Point(20, 20);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(260, 29);
-			this->label1->TabIndex = 0;
-			this->label1->Text = L"Основные настройки";
-			// 
 			// checkBoxSafeDeletion
 			// 
 			this->checkBoxSafeDeletion->AutoSize = true;
-			this->checkBoxSafeDeletion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular,
+			this->checkBoxSafeDeletion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->checkBoxSafeDeletion->Location = System::Drawing::Point(25, 59);
+			this->checkBoxSafeDeletion->Location = System::Drawing::Point(38, 38);
 			this->checkBoxSafeDeletion->Name = L"checkBoxSafeDeletion";
-			this->checkBoxSafeDeletion->Size = System::Drawing::Size(239, 29);
+			this->checkBoxSafeDeletion->Size = System::Drawing::Size(295, 33);
 			this->checkBoxSafeDeletion->TabIndex = 1;
 			this->checkBoxSafeDeletion->Text = L"Безопасное удаление";
 			this->checkBoxSafeDeletion->UseVisualStyleBackColor = true;
@@ -93,9 +85,9 @@ namespace Notes {
 			this->resetBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->resetBtn->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->resetBtn->Location = System::Drawing::Point(155, 257);
+			this->resetBtn->Location = System::Drawing::Point(38, 182);
 			this->resetBtn->Name = L"resetBtn";
-			this->resetBtn->Size = System::Drawing::Size(166, 75);
+			this->resetBtn->Size = System::Drawing::Size(295, 50);
 			this->resetBtn->TabIndex = 3;
 			this->resetBtn->Text = L"Сбросить настройки";
 			this->resetBtn->UseVisualStyleBackColor = false;
@@ -105,13 +97,13 @@ namespace Notes {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(478, 344);
+			this->AutoSize = true;
+			this->ClientSize = System::Drawing::Size(378, 244);
 			this->Controls->Add(this->resetBtn);
 			this->Controls->Add(this->checkBoxSafeDeletion);
-			this->Controls->Add(this->label1);
 			this->MaximizeBox = false;
-			this->MaximumSize = System::Drawing::Size(700, 700);
-			this->MinimumSize = System::Drawing::Size(500, 400);
+			this->MaximumSize = System::Drawing::Size(400, 300);
+			this->MinimumSize = System::Drawing::Size(400, 300);
 			this->Name = L"SettingsForm";
 			this->Text = L"SettingsForm";
 			this->Load += gcnew System::EventHandler(this, &SettingsForm::SettingsForm_Load);
