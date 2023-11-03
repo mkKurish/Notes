@@ -94,6 +94,7 @@ namespace Notes {
 			this->headerTextBox->Name = L"headerTextBox";
 			this->headerTextBox->Size = System::Drawing::Size(600, 35);
 			this->headerTextBox->TabIndex = 0;
+			this->headerTextBox->TextChanged += gcnew System::EventHandler(this, &CreationForm::headerTextBox_TextChanged);
 			this->headerTextBox->Enter += gcnew System::EventHandler(this, &CreationForm::headerTextBox_Enter);
 			this->headerTextBox->Leave += gcnew System::EventHandler(this, &CreationForm::headerTextBox_Leave);
 			// 
@@ -107,6 +108,7 @@ namespace Notes {
 			this->topicTextBox->Name = L"topicTextBox";
 			this->topicTextBox->Size = System::Drawing::Size(470, 35);
 			this->topicTextBox->TabIndex = 1;
+			this->topicTextBox->TextChanged += gcnew System::EventHandler(this, &CreationForm::topicTextBox_TextChanged);
 			this->topicTextBox->Enter += gcnew System::EventHandler(this, &CreationForm::topicTextBox_Enter);
 			this->topicTextBox->Leave += gcnew System::EventHandler(this, &CreationForm::topicTextBox_Leave);
 			// 
@@ -312,5 +314,32 @@ namespace Notes {
 		DataManipulator::addNote(Note(header, body, Topic(topic, colorpickerBtn->BackColor.ToArgb())));
 		this->Close();
 	}
-};
+	private: System::Void headerTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (headerTextBox->Focused) {
+			if (String::IsNullOrWhiteSpace(headerTextBox->Text)) {
+				createBtn->BackColor = SystemColors::ControlDark;
+				createBtn->Enabled = false;
+			}
+			else {
+				createBtn->BackColor = SystemColors::Control;
+				createBtn->Enabled = true;
+			}
+		}
+	}
+	private: System::Void topicTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (topicTextBox->Focused) {
+			if (String::IsNullOrWhiteSpace(topicTextBox->Text)) {
+				colorpickerBtn->BackColor = SystemColors::ControlDark;
+				colorpickerBtn->Enabled = false;
+				colorpickerBtn->Text = gcnew String("нет цвета");
+			}
+			else {
+				if (colorpickerBtn->BackColor == SystemColors::ControlDark)
+					colorpickerBtn->BackColor = SystemColors::Control;
+				colorpickerBtn->Enabled = true;
+				colorpickerBtn->Text = gcnew String("");
+			}
+		}
+	}
+	};
 }
