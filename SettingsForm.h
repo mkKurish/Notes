@@ -42,6 +42,7 @@ namespace Notes {
 
 
 	private: System::Windows::Forms::Button^ resetBtn;
+	private: System::Windows::Forms::Label^ label1;
 
 
 
@@ -64,6 +65,7 @@ namespace Notes {
 		{
 			this->checkBoxSafeDeletion = (gcnew System::Windows::Forms::CheckBox());
 			this->resetBtn = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// checkBoxSafeDeletion
@@ -93,12 +95,27 @@ namespace Notes {
 			this->resetBtn->UseVisualStyleBackColor = false;
 			this->resetBtn->Click += gcnew System::EventHandler(this, &SettingsForm::resetBtn_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
+			this->label1->Location = System::Drawing::Point(33, 104);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(305, 75);
+			this->label1->TabIndex = 4;
+			this->label1->Text = L"меняет безопасное удаление, \r\nвыбор заметок по темам, \r\nотображение по датам/тема"
+				L"м";
+			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// SettingsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
 			this->ClientSize = System::Drawing::Size(378, 244);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->resetBtn);
 			this->Controls->Add(this->checkBoxSafeDeletion);
 			this->MaximizeBox = false;

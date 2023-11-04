@@ -128,8 +128,6 @@ namespace Notes {
 			// 
 			// byDate
 			// 
-			this->byDate->Checked = true;
-			this->byDate->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->byDate->Name = L"byDate";
 			this->byDate->ShowShortcutKeys = false;
 			this->byDate->Size = System::Drawing::Size(189, 36);
@@ -189,7 +187,6 @@ namespace Notes {
 			// notesListBox
 			// 
 			this->notesListBox->BackColor = System::Drawing::SystemColors::Window;
-			this->notesListBox->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->notesListBox->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->notesListBox->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawVariable;
 			this->notesListBox->FormattingEnabled = true;
@@ -224,16 +221,6 @@ namespace Notes {
 
 		}
 #pragma endregion
-	private: System::Void updateMenuFontSize() {
-		this->displayMode->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-			static_cast<System::Byte>(204)));
-		this->choosingTopics->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-			static_cast<System::Byte>(204)));
-		this->createBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-			static_cast<System::Byte>(204)));
-		this->deleteBtn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-			static_cast<System::Byte>(204)));
-	}
 	private: System::Void updateDataInNotesList() {
 		choosingTopics->DropDownItems->Clear();
 		choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String("Очистить выбор")));
@@ -322,15 +309,36 @@ namespace Notes {
 		SettingsForm sform;
 		sform.ShowDialog();
 		updateDataInNotesList();
-		updateMenuFontSize();
+		if (AppSettings::getDisplayThemesMode()) {
+			this->byTheme->Checked = true;
+			this->byTheme->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->byDate->Checked = false;
+			this->byDate->CheckState = System::Windows::Forms::CheckState::Unchecked;
+		}
+		else {
+			this->byTheme->Checked = false;
+			this->byTheme->CheckState = System::Windows::Forms::CheckState::Unchecked;
+			this->byDate->Checked = true;
+			this->byDate->CheckState = System::Windows::Forms::CheckState::Checked;
+		}
 	}
 	private: System::Void faqBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		CertificateForm cfform;
 		cfform.ShowDialog();
 	}
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		//notesListBox->DrawMode = DrawMode::OwnerDrawFixed;
-		//notesListBox->ItemHeight = 60;
+		if (AppSettings::getDisplayThemesMode()) {
+			this->byTheme->Checked = true;
+			this->byTheme->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->byDate->Checked = false;
+			this->byDate->CheckState = System::Windows::Forms::CheckState::Unchecked;
+		}
+		else {
+			this->byTheme->Checked = false;
+			this->byTheme->CheckState = System::Windows::Forms::CheckState::Unchecked;
+			this->byDate->Checked = true;
+			this->byDate->CheckState = System::Windows::Forms::CheckState::Checked;
+		}
 		updateDataInNotesList();
 	}
 

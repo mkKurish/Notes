@@ -1,5 +1,13 @@
 #pragma once
 #include "CustomStructures.h"
+#include "json.hpp"
+#include <fstream>
+#include <string>
+
+using std::to_string;
+using std::ifstream;
+using std::ofstream;
+using json = nlohmann::json;
 
 struct DataManipulator {
 private:
@@ -24,23 +32,50 @@ private:
 	}
 public:
 	static void loadData() {
-		//TODO get data from files
-		addNote(Note("Header of this note1", "Some text\nmaybe some other text",
-			Topic("Short topic", System::Drawing::Color::CadetBlue.ToArgb())));
-		addNote(Note("Header of this note2", "Some text, but very-veryy long. C++ was designed with systems programming and embedded, resource-constrained software and large systems in mind, with performance, efficiency, and flexibility of use as its design highlights.\nIn 1982, Stroustrup started to develop a successor to C with Classes.",
-			Topic("Short topic", System::Drawing::Color::HotPink.ToArgb())));
-		addNote(Note("3Another header, but very long. So long, that it touches the topic", "3-lines text\nfor shure\nI don't lie",
-			Topic("An example of a very long topic that you can't even imagine", System::Drawing::Color::YellowGreen.ToArgb())));
-		addNote(Note("4Another header, but very long. So long, that it touches even the short the topic. (Actually I am an android-developer)", "Some text\nmaybe some other text",
-			Topic("Short topic", System::Drawing::Color::SandyBrown.ToArgb())));
+		json jsonHolder;
+		ifstream inputFile;
+		inputFile.open("notesData.json");
+		if (inputFile.is_open()) {
+			if (inputFile.peek() != ifstream::traits_type::eof()) {
+				inputFile >> jsonHolder;
+				for (int i = 0; i < jsonHolder.size(); i++) {
+					Note newNote(jsonHolder["note" + to_string(i)]["header"],
+						jsonHolder["note" + to_string(i)]["body"],
+						Topic(jsonHolder["note" + to_string(i)]["topic"]["name"],
+							jsonHolder["note" + to_string(i)]["topic"]["colorARGB"]));
+					newNote.indexInMainList = mainData.getSize();
+					mainData.add(newNote);
+					setTopicToNote(mainData.elementLast(), newNote.topic);
+				}
+			}
+		}
+		inputFile.close();
 	}
 	static void saveData() {
-		//TODO saving data to files
+		json jsonHolder;
+		Note* n;
+		for (int i = 0; i < mainData.getSize(); i++) {
+			n = mainData.elementAt(i);
+			jsonHolder["note" + to_string(i)] = {
+				{"header", n->header},
+				{"topic",
+					{{"name", n->topic.name},
+					{"colorARGB", n->topic.colorARGB}}
+				},
+				{"body", n->body},
+				{"creationTime", n->creationTime}
+			};
+		}
+		ofstream outputFile;
+		outputFile.open("notesData.json");
+		outputFile << jsonHolder.dump();
+		outputFile.close();
 	}
 	static void addNote(Note note) {
 		note.indexInMainList = mainData.getSize();
 		mainData.add(note);
 		setTopicToNote(mainData.elementLast(), note.topic);
+		saveData();
 	}
 	static void changeNote(int index, Note newValues) {
 		Note* changingNote = mainData.elementAt(index);
@@ -53,6 +88,7 @@ public:
 		changingNote->header = newValues.header;
 		changingNote->body = newValues.body;
 		updateTopicsColor(changingNote->topic);
+		saveData();
 	}
 	static void removeNote(int index) {
 		Note* deletingNote = mainData.elementAt(index);
@@ -60,6 +96,7 @@ public:
 		if (topicsData.getExistingTopicsNotesList(deletingNote->topic.name)->getSize() == 0)
 			topicsData.removeByTopic(deletingNote->topic);
 		mainData.remove(index);
+		saveData();
 	}
 	static NotesList* getNotes() {
 		return &mainData;
