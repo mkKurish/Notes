@@ -260,7 +260,7 @@ namespace Notes {
 			TopicsList* topics = DataManipulator::getTopics();
 			for (int i = topics->getSize() - 1; i >= 0; i--) {
 				NotesPointersList* notes = topics->topicNotesListAt(i);
-				for (int j = notes->getSize() - 1; j >= 0; j--) {
+				for (int j = 0; j < notes->getSize(); j++) {
 					Note* curNote = notes->elementAt(j);
 					if (AppSettings::topicIsSelected(curNote->topic.name) ||
 						AppSettings::getCountOfSelectedTopics() == 0) {
