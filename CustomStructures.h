@@ -5,10 +5,12 @@
 struct Topic {
 	std::string name;
 	int colorARGB;
+
 	Topic() {
 		name = "";
 		colorARGB = 0;
 	}
+
 	Topic(std::string name, int colorARGB) {
 		this->name = name;
 		this->colorARGB = colorARGB;
@@ -21,9 +23,11 @@ struct Note {
 	Topic topic;
 	time_t creationTime;
 	int indexInMainList;
+
 	Note() {
 		creationTime = time(NULL);
 	}
+
 	Note(std::string header, std::string body, Topic topic, int mainIndex = -1) {
 		this->header = header;
 		this->body = body;
@@ -31,6 +35,11 @@ struct Note {
 		this->indexInMainList = mainIndex;
 		creationTime = time(NULL);
 	}
+
+	/*
+	Getting a string representation of the creation time.
+	Format "HH:MM dd.mm.YY".
+	*/
 	char* getTime() {
 		char* buff = new char[17];
 		tm* creation_tm;
@@ -38,6 +47,10 @@ struct Note {
 		strftime(buff, 17 * sizeof(char), "%H:%M %d.%m.%Y", creation_tm);
 		return buff;
 	}
+
+	/*
+	Ñhecking for equality of notes.
+	*/
 	bool equals(Note* anotherNote) {
 		if (this->header != anotherNote->header)
 			return false;
@@ -51,13 +64,13 @@ struct Note {
 	}
 };
 
-/*
-Sigle-linked list of notes.
-*/
+
+// Sigle-linked list of notes.
 struct NotesList {
 	struct NotesNode {
 		Note note;
 		NotesNode* next;
+
 		NotesNode(Note note, NotesNode* next = nullptr) {
 			this->note = note;
 			this->next = next;
@@ -67,7 +80,7 @@ private:
 	int size;
 	NotesNode* head;
 public:
-	/**
+	/*
 	The default constructor, that set head of the
 	list to nullptr and size of the list to 0.
 	*/
@@ -75,7 +88,8 @@ public:
 		head = nullptr;
 		size = 0;
 	}
-	/**
+
+	/*
 	Use to add an element (Note) to specified index in the list.
 	*/
 	void add(Note value, int index) {
@@ -95,13 +109,15 @@ public:
 			head = additional;
 		size++;
 	}
-	/**
+
+	/*
 	Use to add an element (Note) as the last one in the list.
 	*/
 	void add(Note value) {
 		add(value, size);
 	}
-	/**
+
+	/*
 	Use to delete specified element from the list.
 	*/
 	void remove(int index) {
@@ -126,12 +142,14 @@ public:
 		delete temp;
 		size--;
 	}
+
 	/*
 	Use to delete the last element from the list.
 	*/
 	void remove() {
 		remove(size - 1);
 	}
+
 	/*
 	Use to get an element of the list at specified index.
 	*/
@@ -145,12 +163,14 @@ public:
 		}
 		return &curr->note;
 	}
+
 	/*
 	Use to get the last element of the list.
 	*/
 	Note* elementLast() {
 		return elementAt(size - 1);
 	}
+
 	/*
 	Use to delete all the elements from list.
 	*/
@@ -158,18 +178,21 @@ public:
 		while (!isEmpty())
 			remove();
 	}
+
 	/*
 	Use to get size of the list.
 	*/
 	int getSize() {
 		return size;
 	}
+
 	/*
 	Use to check if list is empty.
 	*/
 	bool isEmpty() {
 		return size == 0;
 	}
+
 	/*
 	The default destructor.
 	*/
@@ -178,13 +201,13 @@ public:
 	}
 };
 
-/*
-Sigle-linked list of pointers to notes.
-*/
+
+// Sigle-linked list of pointers to notes.
 struct NotesPointersList {
 	struct NotesNode {
 		Note* note;
 		NotesNode* next;
+
 		NotesNode(Note* note, NotesNode* next = nullptr) {
 			this->note = note;
 			this->next = next;
@@ -194,7 +217,7 @@ private:
 	int size;
 	NotesNode* head;
 public:
-	/**
+	/*
 	The default constructor, that set head of the
 	list to nullptr and size of the list to 0.
 	*/
@@ -202,7 +225,8 @@ public:
 		head = nullptr;
 		size = 0;
 	}
-	/**
+
+	/*
 	Use to add an element (pointer to Note) to specified index in the list.
 	*/
 	void add(Note* value, int index) {
@@ -222,6 +246,7 @@ public:
 			head = additional;
 		size++;
 	}
+
 	/*
 	Use to add an element (pointer to Note) in correct position by date.
 	*/
@@ -236,13 +261,15 @@ public:
 		}
 		add(value, i);
 	}
-	/**
+
+	/*
 	Use to add an element (pointer to Note) as the last one in the list.
 	*/
 	void addLast(Note* value) {
 		add(value, size);
 	}
-	/**
+
+	/*
 	Use to delete specified element from the list.
 	*/
 	void remove(int index) {
@@ -262,7 +289,8 @@ public:
 		delete temp;
 		size--;
 	}
-	/**
+
+	/*
 	Use to delete specified element from the list.
 	*/
 	void remove(Note* specifiedNote) {
@@ -285,12 +313,14 @@ public:
 		delete temp;
 		size--;
 	}
+
 	/*
 	Use to delete the last element from the list.
 	*/
 	void remove() {
 		remove(size - 1);
 	}
+
 	/*
 	Use to get an element of the list at specified index.
 	*/
@@ -304,9 +334,9 @@ public:
 		}
 		return curr->note;
 	}
+
 	/*
 	Use to find index of Note in NotesList.
-
 	Returns -1 if the Note wasn't found.
 	*/
 	int indexOf(Note* specificNote) {
@@ -320,12 +350,14 @@ public:
 		}
 		return -1;
 	}
+
 	/*
 	Use to get the last element of the list.
 	*/
 	Note* elementLast() {
 		return elementAt(size - 1);
 	}
+
 	/*
 	Use to delete all the elements from list.
 	*/
@@ -333,18 +365,21 @@ public:
 		while (!isEmpty())
 			remove();
 	}
+
 	/*
 	Use to get size of the list.
 	*/
 	int getSize() {
 		return size;
 	}
+
 	/*
 	Use to check if list is empty.
 	*/
 	bool isEmpty() {
 		return size == 0;
 	}
+
 	/*
 	The default destructor.
 	*/
@@ -353,15 +388,15 @@ public:
 	}
 };
 
-/*
-Sigle-linked list of topics.
-*/
+
+// Sigle-linked list of topics.
 struct TopicsList {
 private:
 	struct Node {
 		Topic topic;
 		NotesPointersList notes;
 		Node* next;
+
 		Node(Topic topic, Node* next = nullptr) {
 			this->topic = topic;
 			this->next = next;
@@ -370,7 +405,7 @@ private:
 	Node* head;
 	int size;
 public:
-	/**
+	/*
 	The default constructor, that set head of the
 	list to nullptr and size of the list to 0.
 	*/
@@ -378,7 +413,8 @@ public:
 		head = nullptr;
 		size = 0;
 	}
-	/**
+
+	/*
 	Use to add an element (Topic) to specified index in the list.
 	*/
 	void add(Topic value, int index) {
@@ -398,13 +434,15 @@ public:
 			head = additional;
 		size++;
 	}
-	/**
+
+	/*
 	Use to add an element (Topic) as the last one in the list.
 	*/
 	void add(Topic value) {
 		add(value, size);
 	}
-	/**
+
+	/*
 	Use to delete specified Topic from the list.
 	*/
 	void remove(int index) {
@@ -424,12 +462,14 @@ public:
 		delete temp;
 		size--;
 	}
+
 	/*
 	Use to delete the last Topic from the list.
 	*/
 	void remove() {
 		remove(size - 1);
 	}
+
 	/*
 	Use to remove an existing topic.
 	*/
@@ -450,6 +490,7 @@ public:
 			curr = curr->next;
 		}
 	}
+
 	/*
 	Use to get an element of the list at specified index.
 	*/
@@ -463,12 +504,14 @@ public:
 		}
 		return curr->topic;
 	}
+
 	/*
 	Use to get the last element of the list.
 	*/
 	Topic& lastTopic() {
 		return topicAt(size - 1);
 	}
+
 	/*
 	Use to get an existing topic.
 	*/
@@ -481,6 +524,7 @@ public:
 		}
 		return *(new Topic());
 	}
+
 	/*
 	Use to get an existing topic's notes list.
 	*/
@@ -493,6 +537,7 @@ public:
 		}
 		return new NotesPointersList();
 	}
+
 	/*
 	Use to get an element of the list at specified index.
 	*/
@@ -506,12 +551,14 @@ public:
 		}
 		return &curr->notes;
 	}
+
 	/*
 	Use to get the last element of the list.
 	*/
 	NotesPointersList* lastTopicNotesList() {
 		return topicNotesListAt(size - 1);
 	}
+
 	/*
 	Use to find out if the topic exists
 	*/
@@ -524,6 +571,7 @@ public:
 		}
 		return false;
 	}
+
 	/*
 	Use to delete all the elements from list.
 	*/
@@ -531,18 +579,21 @@ public:
 		while (!isEmpty())
 			remove();
 	}
+
 	/*
 	Use to get size of the list.
 	*/
 	int getSize() {
 		return size;
 	}
+
 	/*
 	Use to check if list is empty.
 	*/
 	bool isEmpty() {
 		return size == 0;
 	}
+
 	/*
 	The default destructor.
 	*/

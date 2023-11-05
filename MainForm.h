@@ -44,34 +44,19 @@ namespace Notes {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::MenuStrip^ menuStrip1;
+	private: System::Windows::Forms::MenuStrip^ menuStrip;
 	private: System::Windows::Forms::ToolStripMenuItem^ createBtn;
 	private: System::Windows::Forms::ToolStripMenuItem^ deleteBtn;
 	private: System::Windows::Forms::ToolStripMenuItem^ faqBtn;
-	protected:
-
-
-
-
 
 	private: System::Windows::Forms::ToolStripMenuItem^ settingsBtn;
 
 	private: System::Windows::Forms::ToolStripMenuItem^ displayMode;
 
-
-
-
 	private: System::Windows::Forms::ToolStripMenuItem^ byDate;
-	private: System::Windows::Forms::ToolStripMenuItem^ byTheme;
+	private: System::Windows::Forms::ToolStripMenuItem^ byTopic;
 	private: System::Windows::Forms::ListBox^ notesListBox;
 	private: System::Windows::Forms::ToolStripMenuItem^ choosingTopics;
-
-
-
-
-
-
-	protected:
 
 	private:
 		/// <summary>
@@ -87,38 +72,38 @@ namespace Notes {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
-			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
 			this->displayMode = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->byDate = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->byTheme = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->byTopic = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->choosingTopics = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->createBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->deleteBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->faqBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->settingsBtn = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->notesListBox = (gcnew System::Windows::Forms::ListBox());
-			this->menuStrip1->SuspendLayout();
+			this->menuStrip->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this->menuStrip1->GripMargin = System::Windows::Forms::Padding(2, 2, 0, 2);
-			this->menuStrip1->ImageScalingSize = System::Drawing::Size(24, 24);
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+			this->menuStrip->GripMargin = System::Windows::Forms::Padding(2, 2, 0, 2);
+			this->menuStrip->ImageScalingSize = System::Drawing::Size(24, 24);
+			this->menuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
 				this->displayMode, this->choosingTopics,
 					this->createBtn, this->deleteBtn, this->faqBtn, this->settingsBtn
 			});
-			this->menuStrip1->Location = System::Drawing::Point(0, 0);
-			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1078, 36);
-			this->menuStrip1->TabIndex = 0;
-			this->menuStrip1->Text = L"menuStrip1";
+			this->menuStrip->Location = System::Drawing::Point(0, 0);
+			this->menuStrip->Name = L"menuStrip";
+			this->menuStrip->Size = System::Drawing::Size(1078, 36);
+			this->menuStrip->TabIndex = 0;
+			this->menuStrip->Text = L"menuStrip";
 			// 
 			// displayMode
 			// 
 			this->displayMode->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
 				this->byDate,
-					this->byTheme
+					this->byTopic
 			});
 			this->displayMode->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
@@ -134,13 +119,13 @@ namespace Notes {
 			this->byDate->Text = L"По датам";
 			this->byDate->Click += gcnew System::EventHandler(this, &MainForm::byDate_Click);
 			// 
-			// byTheme
+			// byTopic
 			// 
-			this->byTheme->Name = L"byTheme";
-			this->byTheme->ShowShortcutKeys = false;
-			this->byTheme->Size = System::Drawing::Size(189, 36);
-			this->byTheme->Text = L"По темам";
-			this->byTheme->Click += gcnew System::EventHandler(this, &MainForm::byTheme_Click);
+			this->byTopic->Name = L"byTopic";
+			this->byTopic->ShowShortcutKeys = false;
+			this->byTopic->Size = System::Drawing::Size(189, 36);
+			this->byTopic->Text = L"По темам";
+			this->byTopic->Click += gcnew System::EventHandler(this, &MainForm::byTopic_Click);
 			// 
 			// choosingTopics
 			// 
@@ -207,21 +192,24 @@ namespace Notes {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1078, 644);
 			this->Controls->Add(this->notesListBox);
-			this->Controls->Add(this->menuStrip1);
+			this->Controls->Add(this->menuStrip);
 			this->DoubleBuffered = true;
-			this->MainMenuStrip = this->menuStrip1;
+			this->MainMenuStrip = this->menuStrip;
 			this->MinimumSize = System::Drawing::Size(1100, 700);
 			this->Name = L"MainForm";
-			this->Text = L"MainForm";
+			this->Text = L"Заметки";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
-			this->menuStrip1->ResumeLayout(false);
-			this->menuStrip1->PerformLayout();
+			this->menuStrip->ResumeLayout(false);
+			this->menuStrip->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void updateDataInNotesList() {
+	/*
+	Updating all interface objects, linked to the notes data.
+	*/
+	private: System::Void updateNotesDataMainForm() {
 		choosingTopics->DropDownItems->Clear();
 		choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String("Очистить выбор")));
 		choosingTopics->DropDownItems[0]->Click += gcnew System::EventHandler(this, &MainForm::clearChosenTopics);
@@ -239,17 +227,17 @@ namespace Notes {
 				choosingTopics->DropDownItems->Add(gcnew Windows::Forms::ToolStripMenuItem(gcnew String("-без темы-"), colorImg));
 			}
 			choosingTopics->DropDownItems[realIndex]->Click += gcnew System::EventHandler(this, &MainForm::choosingTopicsItem_Click);
-			((ToolStripMenuItem^)choosingTopics->DropDownItems[realIndex])->Checked = AppSettings::topicIsSelected(topicName);
+			((ToolStripMenuItem^)choosingTopics->DropDownItems[realIndex])->Checked = AppSettings::isTopicSelected(topicName);
 		}
 		// Tuple of next values: header, body, topic name, topic color, time, index in mainList
 		List<Tuple<String^, String^, String^, Color, String^, int>^>^ dataSet = gcnew List<Tuple<String^, String^, String^, Color, String^, int>^>();
-		if (AppSettings::getDisplayThemesMode()) {
+		if (AppSettings::isDisplayTopicsMode()) {
 			TopicsList* topics = DataManipulator::getTopics();
 			for (int i = topics->getSize() - 1; i >= 0; i--) {
 				NotesPointersList* notes = topics->topicNotesListAt(i);
 				for (int j = 0; j < notes->getSize(); j++) {
 					Note* curNote = notes->elementAt(j);
-					if (AppSettings::topicIsSelected(curNote->topic.name) ||
+					if (AppSettings::isTopicSelected(curNote->topic.name) ||
 						AppSettings::getCountOfSelectedTopics() == 0) {
 						dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^, int>(
 							gcnew String(curNote->header.c_str()),
@@ -266,7 +254,7 @@ namespace Notes {
 			NotesList* notes = DataManipulator::getNotes();
 			for (int i = notes->getSize() - 1; i >= 0; i--) {
 				Note* curNote = notes->elementAt(i);
-				if (AppSettings::topicIsSelected(curNote->topic.name) ||
+				if (AppSettings::isTopicSelected(curNote->topic.name) ||
 					AppSettings::getCountOfSelectedTopics() == 0) {
 					dataSet->Add(gcnew Tuple<String^, String^, String^, Color, String^, int>(
 						gcnew String(curNote->header.c_str()),
@@ -286,11 +274,19 @@ namespace Notes {
 			notesListBox->SelectedIndex = lastSelectedIndex;
 		}
 	}
+
+	/*
+	Function called when createBtn button is pressed.
+	*/
 	private: System::Void createBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		CreationForm cform;
 		cform.ShowDialog();
-		updateDataInNotesList();
+		updateNotesDataMainForm();
 	}
+		   
+	/*
+	Function called when deleteBtn button is pressed.
+	*/
 	private: System::Void deleteBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		int ind = notesListBox->SelectedIndex;
 		if (ind == -1)
@@ -302,46 +298,63 @@ namespace Notes {
 			}
 		}
 		ind = ((Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[notesListBox->SelectedIndex])->Item6;
+		if (DataManipulator::getTopics()->getExistingTopicsNotesList(DataManipulator::getNotes()->elementAt(ind)->topic.name)->getSize() == 1)
+			AppSettings::unselectTopic(DataManipulator::getNotes()->elementAt(ind)->topic.name);
 		DataManipulator::removeNote(ind);
-		updateDataInNotesList();
+		updateNotesDataMainForm();
 	}
+		   
+	/*
+	Function called when settingsBtn button is pressed.
+	*/
 	private: System::Void settingsBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		SettingsForm sform;
 		sform.ShowDialog();
-		updateDataInNotesList();
-		if (AppSettings::getDisplayThemesMode()) {
-			this->byTheme->Checked = true;
-			this->byTheme->CheckState = System::Windows::Forms::CheckState::Checked;
+		updateNotesDataMainForm();
+		if (AppSettings::isDisplayTopicsMode()) {
+			this->byTopic->Checked = true;
+			this->byTopic->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->byDate->Checked = false;
 			this->byDate->CheckState = System::Windows::Forms::CheckState::Unchecked;
 		}
 		else {
-			this->byTheme->Checked = false;
-			this->byTheme->CheckState = System::Windows::Forms::CheckState::Unchecked;
+			this->byTopic->Checked = false;
+			this->byTopic->CheckState = System::Windows::Forms::CheckState::Unchecked;
 			this->byDate->Checked = true;
 			this->byDate->CheckState = System::Windows::Forms::CheckState::Checked;
 		}
 	}
+		   
+	/*
+	Function called when faqBtn button is pressed.
+	*/
 	private: System::Void faqBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		CertificateForm cfform;
 		cfform.ShowDialog();
 	}
+		   
+	/*
+	Function called when loading MainForm.
+	*/
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		if (AppSettings::getDisplayThemesMode()) {
-			this->byTheme->Checked = true;
-			this->byTheme->CheckState = System::Windows::Forms::CheckState::Checked;
+		if (AppSettings::isDisplayTopicsMode()) {
+			this->byTopic->Checked = true;
+			this->byTopic->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->byDate->Checked = false;
 			this->byDate->CheckState = System::Windows::Forms::CheckState::Unchecked;
 		}
 		else {
-			this->byTheme->Checked = false;
-			this->byTheme->CheckState = System::Windows::Forms::CheckState::Unchecked;
+			this->byTopic->Checked = false;
+			this->byTopic->CheckState = System::Windows::Forms::CheckState::Unchecked;
 			this->byDate->Checked = true;
 			this->byDate->CheckState = System::Windows::Forms::CheckState::Checked;
 		}
-		updateDataInNotesList();
+		updateNotesDataMainForm();
 	}
-
+		   
+	/*
+	Function called when drawing an object of the notesListBox list.
+	*/
 	private: System::Void notesListBox_DrawItem(System::Object^ sender, System::Windows::Forms::DrawItemEventArgs^ e) {
 		if (e->Index == -1)
 			return;
@@ -430,6 +443,10 @@ namespace Notes {
 				e->Graphics->DrawString(dataItem->Item3, topicFont, Brushes::Black, *topicRect, topicFormat);
 		}
 	}
+		   
+	/*
+	Function called when measuring an object of the notesListBox list.
+	*/
 	private: System::Void notesListBox_MeasureItem(System::Object^ sender, System::Windows::Forms::MeasureItemEventArgs^ e) {
 		Drawing::Font^ headerFont = gcnew Drawing::Font("Microsoft Sans Serif", 11, FontStyle::Bold);
 		Drawing::Font^ bodyFont = gcnew Drawing::Font("Microsoft Sans Serif", 9, FontStyle::Regular);
@@ -440,35 +457,55 @@ namespace Notes {
 		bodySize = e->Graphics->MeasureString(simpleOneLine, bodyFont);
 		e->ItemHeight = 4 + headerSize->Height + 4 + bodySize->Height * 2 + 4;
 	}
+		   
+	/*
+	Function called when resizing the notesListBox.
+	*/
 	private: System::Void notesListBox_Resize(System::Object^ sender, System::EventArgs^ e) {
 		notesListBox->Invalidate();
 	}
+		   
+	/*
+	Function called when list item is pressed twice.
+	*/
 	private: System::Void notesListBox_DoubleClick(System::Object^ sender, System::EventArgs^ e) {
 		if (notesListBox->SelectedIndex == -1)
 			return;
 		ChangingForm chform;
 		chform.selectedIndex = ((Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[notesListBox->SelectedIndex])->Item6;
 		chform.ShowDialog();
-		updateDataInNotesList();
+		updateNotesDataMainForm();
 	}
+
+	/*
+	Function called when the byDate button is pressed.
+	*/
 	private: System::Void byDate_Click(System::Object^ sender, System::EventArgs^ e) {
-		AppSettings::setDisplayThemesMode(false);
-		updateDataInNotesList();
+		AppSettings::setDisplayTopicsMode(false);
+		updateNotesDataMainForm();
 		byDate->Checked = true;
-		byTheme->Checked = false;
+		byTopic->Checked = false;
 	}
-	private: System::Void byTheme_Click(System::Object^ sender, System::EventArgs^ e) {
-		AppSettings::setDisplayThemesMode(true);
-		updateDataInNotesList();
+		   
+	/*
+	Function called when the byTopic button is pressed.
+	*/
+	private: System::Void byTopic_Click(System::Object^ sender, System::EventArgs^ e) {
+		AppSettings::setDisplayTopicsMode(true);
+		updateNotesDataMainForm();
 		byDate->Checked = false;
-		byTheme->Checked = true;
+		byTopic->Checked = true;
 	}
+		   
+	/*
+	Function is called when item in the list of topics to select is pressed
+	*/
 	private: System::Void choosingTopicsItem_Click(System::Object^ sender, System::EventArgs^ e) {
 		ToolStripMenuItem^ realSender = (ToolStripMenuItem^)sender;
 		std::string topic = msclr::interop::marshal_as<std::string>(realSender->Text);
 		if (topic == "-без темы-" && Bitmap(realSender->Image).GetPixel(0, 0).ToArgb() == Color::Black.ToArgb())
 			topic = "";
-		if (AppSettings::topicIsSelected(topic)) {
+		if (AppSettings::isTopicSelected(topic)) {
 			AppSettings::unselectTopic(topic);
 			realSender->Checked = false;
 		}
@@ -476,14 +513,18 @@ namespace Notes {
 			AppSettings::addTopicInSelected(topic);
 			realSender->Checked = true;
 		}
-		updateDataInNotesList();
+		updateNotesDataMainForm();
 	}
+
+	/*
+	Clearing list of chones topics.
+	*/
 	private: System::Void clearChosenTopics(System::Object^ sender, System::EventArgs^ e) {
 		for (int i = 0; i < choosingTopics->DropDownItems->Count; i++) {
 			((ToolStripMenuItem^)choosingTopics->DropDownItems[i])->Checked = false;
-			AppSettings::unselectAllTopics();
 		}
-		updateDataInNotesList();
+		AppSettings::unselectAllTopics();
+		updateNotesDataMainForm();
 	}
 	};
 }

@@ -13,12 +13,20 @@ struct DataManipulator {
 private:
 	static NotesList mainData;
 	static TopicsList topicsData;
+
+	/*
+	Updating colors of topic and color of topic for each note with this topic.
+	*/
 	static void updateTopicsColor(Topic topic) {
 		for (int i = 0; i < topicsData.getExistingTopicsNotesList(topic.name)->getSize(); i++) {
 			topicsData.getExistingTopicsNotesList(topic.name)->elementAt(i)->topic.colorARGB = topic.colorARGB;
 		}
 		topicsData.getExistingTopic(topic.name).colorARGB = topic.colorARGB;
 	}
+
+	/*
+	Linking topic in topicsData to the note in mainData.
+	*/
 	static void setTopicToNote(Note* note, Topic topic) {
 		if (topicsData.isTopicExists(topic.name)) {
 			topicsData.getExistingTopicsNotesList(topic.name)->add(note);
@@ -31,6 +39,13 @@ private:
 		}
 	}
 public:
+	/*
+	Attempt to load saved notes data.
+
+	If there is a file "notesData.json" and it is not empty,
+	it is read and the downloaded data are installed.
+	mainData and topicsData are being recovered.
+	*/
 	static void loadData() {
 		json jsonHolder;
 		ifstream inputFile;
@@ -44,6 +59,7 @@ public:
 						Topic(jsonHolder["note" + to_string(i)]["topic"]["name"],
 							jsonHolder["note" + to_string(i)]["topic"]["colorARGB"]));
 					newNote.indexInMainList = mainData.getSize();
+					newNote.creationTime = jsonHolder["note" + to_string(i)]["creationTime"];
 					mainData.add(newNote);
 					setTopicToNote(mainData.elementLast(), newNote.topic);
 				}
@@ -51,6 +67,12 @@ public:
 		}
 		inputFile.close();
 	}
+
+	/*
+	Saving notes data.
+
+	Writing the settings values to the "notesData.json" file.
+	*/
 	static void saveData() {
 		json jsonHolder;
 		Note* n;
@@ -71,12 +93,21 @@ public:
 		outputFile << jsonHolder.dump();
 		outputFile.close();
 	}
+
+	/*
+	Adding note to the mainData (list of notes) and
+	linking this note to the topic in topicsData.
+	*/
 	static void addNote(Note note) {
 		note.indexInMainList = mainData.getSize();
 		mainData.add(note);
 		setTopicToNote(mainData.elementLast(), note.topic);
 		saveData();
 	}
+
+	/*
+	Changing note and updating mainData and topicsData.
+	*/
 	static void changeNote(int index, Note newValues) {
 		Note* changingNote = mainData.elementAt(index);
 		if (newValues.topic.name != changingNote->topic.name) {
@@ -90,6 +121,10 @@ public:
 		updateTopicsColor(changingNote->topic);
 		saveData();
 	}
+
+	/*
+	Removing note from mainData and topicsData.
+	*/
 	static void removeNote(int index) {
 		Note* deletingNote = mainData.elementAt(index);
 		topicsData.getExistingTopicsNotesList(deletingNote->topic.name)->remove(deletingNote);
@@ -98,12 +133,24 @@ public:
 		mainData.remove(index);
 		saveData();
 	}
+
+	/*
+	Getting list of notes in order by date (mainData).
+	*/
 	static NotesList* getNotes() {
 		return &mainData;
 	}
+
+	/*
+	Getting list of topics (topicsData).
+	*/
 	static TopicsList* getTopics() {
 		return &topicsData;
 	}
+
+	/*
+	Getting count of existing notes.
+	*/
 	static int notesCount() {
 		return mainData.getSize();
 	}

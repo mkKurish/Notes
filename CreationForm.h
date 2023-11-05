@@ -39,24 +39,19 @@ namespace Notes {
 		}
 	private: System::Windows::Forms::TextBox^ headerTextBox;
 	private: System::Windows::Forms::TextBox^ topicTextBox;
-	protected:
-
-	protected:
 
 	private: System::Windows::Forms::Button^ cancelBnt;
 	private: System::Windows::Forms::Button^ createBtn;
+	private: System::Windows::Forms::Label^ labelHeader;
+	private: System::Windows::Forms::Label^ labelTopic;
+	private: System::Windows::Forms::Label^ labelBody;
 
-
-
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::RichTextBox^ bodyTextBox;
+	private: System::Windows::Forms::Label^ labelColor;
 
-	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ colorpickerBtn;
 
-	private: System::Windows::Forms::ColorDialog^ colorDialog1;
+	private: System::Windows::Forms::ColorDialog^ colorDialog;
 
 	private:
 		/// <summary>
@@ -75,13 +70,13 @@ namespace Notes {
 			this->topicTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->cancelBnt = (gcnew System::Windows::Forms::Button());
 			this->createBtn = (gcnew System::Windows::Forms::Button());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->labelHeader = (gcnew System::Windows::Forms::Label());
+			this->labelTopic = (gcnew System::Windows::Forms::Label());
+			this->labelBody = (gcnew System::Windows::Forms::Label());
 			this->bodyTextBox = (gcnew System::Windows::Forms::RichTextBox());
-			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->labelColor = (gcnew System::Windows::Forms::Label());
 			this->colorpickerBtn = (gcnew System::Windows::Forms::Button());
-			this->colorDialog1 = (gcnew System::Windows::Forms::ColorDialog());
+			this->colorDialog = (gcnew System::Windows::Forms::ColorDialog());
 			this->SuspendLayout();
 			// 
 			// headerTextBox
@@ -140,41 +135,41 @@ namespace Notes {
 			this->createBtn->UseVisualStyleBackColor = false;
 			this->createBtn->Click += gcnew System::EventHandler(this, &CreationForm::createBtn_Click);
 			// 
-			// label1
+			// labelHeader
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelHeader->AutoSize = true;
+			this->labelHeader->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label1->Location = System::Drawing::Point(39, 15);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(108, 25);
-			this->label1->TabIndex = 5;
-			this->label1->Text = L"Заголовок";
+			this->labelHeader->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelHeader->Location = System::Drawing::Point(39, 15);
+			this->labelHeader->Name = L"labelHeader";
+			this->labelHeader->Size = System::Drawing::Size(108, 25);
+			this->labelHeader->TabIndex = 5;
+			this->labelHeader->Text = L"Заголовок";
 			// 
-			// label2
+			// labelTopic
 			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelTopic->AutoSize = true;
+			this->labelTopic->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label2->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label2->Location = System::Drawing::Point(39, 93);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(62, 25);
-			this->label2->TabIndex = 6;
-			this->label2->Text = L"Тема";
+			this->labelTopic->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelTopic->Location = System::Drawing::Point(39, 93);
+			this->labelTopic->Name = L"labelTopic";
+			this->labelTopic->Size = System::Drawing::Size(62, 25);
+			this->labelTopic->TabIndex = 6;
+			this->labelTopic->Text = L"Тема";
 			// 
-			// label3
+			// labelBody
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelBody->AutoSize = true;
+			this->labelBody->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label3->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label3->Location = System::Drawing::Point(39, 171);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(130, 25);
-			this->label3->TabIndex = 7;
-			this->label3->Text = L"Содержание";
+			this->labelBody->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelBody->Location = System::Drawing::Point(39, 171);
+			this->labelBody->Name = L"labelBody";
+			this->labelBody->Size = System::Drawing::Size(130, 25);
+			this->labelBody->TabIndex = 7;
+			this->labelBody->Text = L"Содержание";
 			// 
 			// bodyTextBox
 			// 
@@ -192,18 +187,18 @@ namespace Notes {
 			this->bodyTextBox->Enter += gcnew System::EventHandler(this, &CreationForm::bodyTextBox_Enter);
 			this->bodyTextBox->Leave += gcnew System::EventHandler(this, &CreationForm::bodyTextBox_Leave);
 			// 
-			// label4
+			// labelColor
 			// 
-			this->label4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelColor->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->labelColor->AutoSize = true;
+			this->labelColor->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label4->ForeColor = System::Drawing::SystemColors::GrayText;
-			this->label4->Location = System::Drawing::Point(585, 93);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(59, 25);
-			this->label4->TabIndex = 9;
-			this->label4->Text = L"Цвет";
+			this->labelColor->ForeColor = System::Drawing::SystemColors::GrayText;
+			this->labelColor->Location = System::Drawing::Point(585, 93);
+			this->labelColor->Name = L"labelColor";
+			this->labelColor->Size = System::Drawing::Size(59, 25);
+			this->labelColor->TabIndex = 9;
+			this->labelColor->Text = L"Цвет";
 			// 
 			// colorpickerBtn
 			// 
@@ -220,10 +215,10 @@ namespace Notes {
 			this->colorpickerBtn->UseVisualStyleBackColor = false;
 			this->colorpickerBtn->Click += gcnew System::EventHandler(this, &CreationForm::colorpickerBtn_Click);
 			// 
-			// colorDialog1
+			// colorDialog
 			// 
-			this->colorDialog1->ShowHelp = true;
-			this->colorDialog1->SolidColorOnly = true;
+			this->colorDialog->ShowHelp = true;
+			this->colorDialog->SolidColorOnly = true;
 			// 
 			// CreationForm
 			// 
@@ -231,42 +226,60 @@ namespace Notes {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(678, 644);
 			this->Controls->Add(this->colorpickerBtn);
-			this->Controls->Add(this->label4);
+			this->Controls->Add(this->labelColor);
 			this->Controls->Add(this->bodyTextBox);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
+			this->Controls->Add(this->labelBody);
+			this->Controls->Add(this->labelTopic);
+			this->Controls->Add(this->labelHeader);
 			this->Controls->Add(this->createBtn);
 			this->Controls->Add(this->cancelBnt);
 			this->Controls->Add(this->topicTextBox);
 			this->Controls->Add(this->headerTextBox);
 			this->MinimumSize = System::Drawing::Size(700, 700);
 			this->Name = L"CreationForm";
-			this->Text = L"CreationForm";
+			this->Text = L"Создание заметки";
 			this->Load += gcnew System::EventHandler(this, &CreationForm::CreationForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-
+	/*
+	Function called when loading CreationForm.
+	*/
 	private: System::Void CreationForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		setHintToTextBox(headerTextBox, "Введите заголовок", Color::Red);
 		setHintToTextBox(topicTextBox, "Введите тему", Color::Gray);
 		setHintToTextBox(bodyTextBox, "Введите содержание", Color::Gray);
 	}
+		   
+	/*
+	Function called when colorpickerBtn buton is pressed.
+	*/
 	private: System::Void colorpickerBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		colorDialog1->ShowDialog();
-		if (colorDialog1->Color != Drawing::Color::Black) {
-			colorpickerBtn->BackColor = colorDialog1->Color;
+		colorDialog->ShowDialog();
+		if (colorDialog->Color != Drawing::Color::Black) {
+			colorpickerBtn->BackColor = colorDialog->Color;
 		}
 	}
+		   
+	/*
+	Function called when cancelBtn button is pressed.
+	*/
 	private: System::Void cancelBnt_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+		   
+	/*
+	Function called when entering the headerTextBox text field.
+	*/
 	private: System::Void headerTextBox_Enter(System::Object^ sender, System::EventArgs^ e) {
 		removeHintFromTextBox(headerTextBox, Color::Red);
 	}
+		   
+	/*
+	Function called when leaving the headerTextBox text field.
+	*/
 	private: System::Void headerTextBox_Leave(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrWhiteSpace(headerTextBox->Text)) {
 			createBtn->BackColor = SystemColors::ControlDark;
@@ -278,9 +291,17 @@ namespace Notes {
 		}
 		setHintToTextBox(headerTextBox, "Введите заголовок", Color::Red);
 	}
+		   
+	/*
+	Function called when entering the topicTextBox text field.
+	*/
 	private: System::Void topicTextBox_Enter(System::Object^ sender, System::EventArgs^ e) {
 		removeHintFromTextBox(topicTextBox, Color::Gray);
 	}
+		   
+	/*
+	Function called when leaving the topicTextBox text field.
+	*/
 	private: System::Void topicTextBox_Leave(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrWhiteSpace(topicTextBox->Text)) {
 			colorpickerBtn->BackColor = SystemColors::ControlDark;
@@ -295,12 +316,24 @@ namespace Notes {
 		}
 		setHintToTextBox(topicTextBox, "Введите тему", Color::Gray);
 	}
+		   
+	/*
+	Function called when entering the bodyTextBox text field.
+	*/
 	private: System::Void bodyTextBox_Enter(System::Object^ sender, System::EventArgs^ e) {
 		removeHintFromTextBox(bodyTextBox, Color::Gray);
 	}
+		   
+	/*
+	Function called when leaving the bodyTextBox text field.
+	*/
 	private: System::Void bodyTextBox_Leave(System::Object^ sender, System::EventArgs^ e) {
 		setHintToTextBox(bodyTextBox, "Введите содержание", Color::Gray);
 	}
+		   
+	/*
+	Function called when createBtn button is pressed.
+	*/
 	private: System::Void createBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrWhiteSpace(headerTextBox->Text))
 			return;
@@ -314,6 +347,10 @@ namespace Notes {
 		DataManipulator::addNote(Note(header, body, Topic(topic, colorpickerBtn->BackColor.ToArgb())));
 		this->Close();
 	}
+		   
+	/*
+	Function called when the text in the headerTextBox text field changes.
+	*/
 	private: System::Void headerTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		if (headerTextBox->Focused) {
 			if (String::IsNullOrWhiteSpace(headerTextBox->Text)) {
@@ -326,6 +363,10 @@ namespace Notes {
 			}
 		}
 	}
+		   
+	/*
+	Function called when the text in the topicTextBox text field changes.
+	*/
 	private: System::Void topicTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		if (topicTextBox->Focused) {
 			if (String::IsNullOrWhiteSpace(topicTextBox->Text)) {

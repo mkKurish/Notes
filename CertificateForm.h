@@ -37,11 +37,6 @@ namespace Notes {
 		}
 	private: System::Windows::Forms::Button^ returnBtn;
 	private: System::Windows::Forms::ListBox^ faqListBox;
-	protected:
-
-
-
-	protected:
 
 	private:
 		/// <summary>
@@ -98,20 +93,26 @@ namespace Notes {
 			this->Controls->Add(this->returnBtn);
 			this->MinimumSize = System::Drawing::Size(500, 500);
 			this->Name = L"CertificateForm";
-			this->Text = L"CertificateForm";
+			this->Text = L"Справка";
 			this->Load += gcnew System::EventHandler(this, &CertificateForm::CertificateForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	// A variable indicating the type of the text title.
 	private: String^ CHAPTER_TYPE = gcnew String("chapter");
+	// A variable indicating the type of the text topic.
 	private: String^ TOPIC_TYPE = gcnew String("topic");
+	// A variable indicating the type of the text basic content.
 	private: String^ BODY_TYPE = gcnew String("body");
 
+	/*
+	Function called when loading the CertificationForm.
+	*/
 	private: System::Void CertificateForm_Load(System::Object^ sender, System::EventArgs^ e) {
 
-		// String#1 - type (chapter, topic, body); String#2 - content
+		// String#1 - type (chapter, topic, body); String#2 - content.
 		List<Tuple<String^, String^>^>^ faqData = gcnew List<Tuple<String^, String^>^>();
 
 		faqData->Add(gcnew Tuple<String^, String^>(CHAPTER_TYPE, gcnew String("Программа \"Заметки\"")));
@@ -153,11 +154,16 @@ namespace Notes {
 
 		faqListBox->DrawMode = DrawMode::OwnerDrawVariable;
 	}
+
+	/*
+	Function called when drawing an object of the faqLisBox list.
+	*/
 	private: System::Void faqListBox_DrawItem(System::Object^ sender, System::Windows::Forms::DrawItemEventArgs^ e) {
-		if ((e->State & DrawItemState::Selected) == DrawItemState::Selected) 
+		if ((e->State & DrawItemState::Selected) == DrawItemState::Selected)
 			e = gcnew DrawItemEventArgs(e->Graphics, e->Font, e->Bounds,
 				e->Index, e->State ^ DrawItemState::Selected, e->ForeColor, SystemColors::Window);
 		Brush^ brush = Brushes::Black;
+		// String#1 - type (chapter, topic, body); String#2 - content.
 		Tuple<String^, String^>^ currentItem = (Tuple<String^, String^>^) faqListBox->Items[e->Index];
 		Drawing::StringFormat^ format = gcnew Drawing::StringFormat();
 		Drawing::Font^ font;
@@ -172,29 +178,42 @@ namespace Notes {
 			font = gcnew Drawing::Font("Microsoft Sans Serif", 10, FontStyle::Regular);
 		}
 		Drawing::SizeF^ size = e->Graphics->MeasureString(currentItem->Item2, font);
-		Drawing::RectangleF^ rect = gcnew Drawing::RectangleF(e->Bounds.Left, e->Bounds.Top, faqListBox->Width-15, size->Height);
+		Drawing::RectangleF^ rect = gcnew Drawing::RectangleF(e->Bounds.Left, e->Bounds.Top, faqListBox->Width - 15, size->Height);
 		e->DrawBackground();
 		e->Graphics->DrawString(currentItem->Item2, font, brush, *rect, format);
 	}
+
+	/*
+	Function called when measuring an object of the faqListBox list.
+	*/
 	private: System::Void faqListBox_MeasureItem(System::Object^ sender, System::Windows::Forms::MeasureItemEventArgs^ e) {
 		if (faqListBox->Items->Count <= 0)
 			return;
+		// String#1 - type (chapter, topic, body); String#2 - content.
 		Tuple<String^, String^>^ currentItem = dynamic_cast<Tuple<String^, String^>^>(faqListBox->Items[e->Index]);
 		Drawing::Font^ font;
-		if (currentItem->Item1 == CHAPTER_TYPE) 
+		if (currentItem->Item1 == CHAPTER_TYPE)
 			font = gcnew Drawing::Font("Microsoft Sans Serif", 16, FontStyle::Bold);
-		else if (currentItem->Item1 == TOPIC_TYPE) 
+		else if (currentItem->Item1 == TOPIC_TYPE)
 			font = gcnew Drawing::Font("Microsoft Sans Serif", 13, FontStyle::Bold);
-		else 
+		else
 			font = gcnew Drawing::Font("Microsoft Sans Serif", 10, FontStyle::Regular);
 		Drawing::SizeF^ size = e->Graphics->MeasureString(currentItem->Item2, font);
 		e->ItemHeight = size->Height;
 	}
-private: System::Void faqListBox_Resize(System::Object^ sender, System::EventArgs^ e) {
-	faqListBox->Invalidate();
-}
-private: System::Void returnBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-	Close();
-}
-};
+
+	/*
+	Function called when resizing the faqListBox.
+	*/
+	private: System::Void faqListBox_Resize(System::Object^ sender, System::EventArgs^ e) {
+		faqListBox->Invalidate();
+	}
+
+	/*
+	Function called when the resetBtn button is pressed.
+	*/
+	private: System::Void returnBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		Close();
+	}
+	};
 }

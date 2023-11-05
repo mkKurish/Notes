@@ -11,6 +11,6 @@ int main(array<String^>^ args) {
 	Application::EnableVisualStyles();
 	DataManipulator::loadData();
 	AppSettings::loadSettings();
-	Notes::MainForm mf;
-	Application::Run(% mf);
+	Notes::MainForm mainFormInstance;
+	Application::Run(% mainFormInstance);
 }

@@ -1,6 +1,6 @@
 #include "AppSettings.h"
 
 bool AppSettings::safeDelete;
-bool AppSettings::displayByThemes;
+bool AppSettings::displayByTopics;
 std::string* AppSettings::selectedTopics;
 int AppSettings::countOfSelectedTopics;

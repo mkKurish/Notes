@@ -38,17 +38,13 @@ namespace Notes {
 	private: System::Windows::Forms::Button^ cancelBtn;
 
 	private: System::Windows::Forms::Button^ confirmBtn;
-	private: System::Windows::Forms::Label^ label1;
-
-	protected:
-
-	protected:
+	private: System::Windows::Forms::Label^ labelInfo;
 
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -59,7 +55,7 @@ namespace Notes {
 		{
 			this->cancelBtn = (gcnew System::Windows::Forms::Button());
 			this->confirmBtn = (gcnew System::Windows::Forms::Button());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->labelInfo = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// cancelBtn
@@ -78,7 +74,7 @@ namespace Notes {
 			// 
 			this->confirmBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->confirmBtn->Location = System::Drawing::Point(216, 175);
+			this->confirmBtn->Location = System::Drawing::Point(316, 175);
 			this->confirmBtn->Name = L"confirmBtn";
 			this->confirmBtn->Size = System::Drawing::Size(150, 57);
 			this->confirmBtn->TabIndex = 2;
@@ -86,44 +82,55 @@ namespace Notes {
 			this->confirmBtn->UseVisualStyleBackColor = true;
 			this->confirmBtn->Click += gcnew System::EventHandler(this, &DeletionConfirmationForm::confirmBtn_Click);
 			// 
-			// label1
+			// labelInfo
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelInfo->AutoSize = true;
+			this->labelInfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->Location = System::Drawing::Point(35, 40);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(307, 58);
-			this->label1->TabIndex = 3;
-			this->label1->Text = L"Вы уверены, что\r\n хотите удалить заметку\?";
-			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->labelInfo->Location = System::Drawing::Point(85, 67);
+			this->labelInfo->Name = L"labelInfo";
+			this->labelInfo->Size = System::Drawing::Size(307, 58);
+			this->labelInfo->TabIndex = 3;
+			this->labelInfo->Text = L"Вы уверены, что\r\n хотите удалить заметку\?";
+			this->labelInfo->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// DeletionConfirmationForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(378, 244);
-			this->Controls->Add(this->label1);
+			this->ClientSize = System::Drawing::Size(478, 244);
+			this->Controls->Add(this->labelInfo);
 			this->Controls->Add(this->confirmBtn);
 			this->Controls->Add(this->cancelBtn);
 			this->MaximizeBox = false;
-			this->MaximumSize = System::Drawing::Size(400, 300);
-			this->MinimumSize = System::Drawing::Size(400, 300);
+			this->MaximumSize = System::Drawing::Size(500, 300);
+			this->MinimumSize = System::Drawing::Size(500, 300);
 			this->Name = L"DeletionConfirmationForm";
-			this->Text = L"DeletionConfirmation";
-			this->Load += gcnew System::EventHandler(this, &DeletionConfirmationForm::DeletionConfirmation_Load);
+			this->Text = L"Подтверждение";
+			this->Load += gcnew System::EventHandler(this, &DeletionConfirmationForm::DeletionConfirmationForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void DeletionConfirmation_Load(System::Object^ sender, System::EventArgs^ e) {
+	/*
+	Function called when loading DeletionConfirmationForm.
+	*/
+	private: System::Void DeletionConfirmationForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
+		   
+	/*
+	Function called when cancelBtn button is pressed.
+	*/
 	private: System::Void cancelBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->DialogResult = Windows::Forms::DialogResult::No;
 	}
-private: System::Void confirmBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		   
+	/*
+	Function called when confirmBtn button is pressed.
+	*/
+	private: System::Void confirmBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->DialogResult = Windows::Forms::DialogResult::Yes;
-}
-};
+	}
+	};
 }

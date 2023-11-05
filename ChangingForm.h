@@ -41,7 +41,6 @@ namespace Notes {
 		}
 	private: System::Windows::Forms::Button^ colorpickerBtn;
 	private: System::Windows::Forms::Label^ labelColor;
-	protected:
 
 	private: System::Windows::Forms::RichTextBox^ bodyTextBox;
 	private: System::Windows::Forms::Label^ labelBody;
@@ -55,7 +54,7 @@ namespace Notes {
 	private: System::Windows::Forms::Button^ cancelBnt;
 	private: System::Windows::Forms::TextBox^ topicTextBox;
 	private: System::Windows::Forms::TextBox^ headerTextBox;
-	private: System::Windows::Forms::ColorDialog^ colorDialog1;
+	private: System::Windows::Forms::ColorDialog^ colorDialog;
 
 	private:
 		/// <summary>
@@ -80,7 +79,7 @@ namespace Notes {
 			this->cancelBnt = (gcnew System::Windows::Forms::Button());
 			this->topicTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->headerTextBox = (gcnew System::Windows::Forms::TextBox());
-			this->colorDialog1 = (gcnew System::Windows::Forms::ColorDialog());
+			this->colorDialog = (gcnew System::Windows::Forms::ColorDialog());
 			this->SuspendLayout();
 			// 
 			// colorpickerBtn
@@ -177,7 +176,7 @@ namespace Notes {
 			this->confirmationBtn->TabIndex = 14;
 			this->confirmationBtn->Text = L"Сохранить";
 			this->confirmationBtn->UseVisualStyleBackColor = false;
-			this->confirmationBtn->Click += gcnew System::EventHandler(this, &ChangingForm::confirmationBtnBtn_Click);
+			this->confirmationBtn->Click += gcnew System::EventHandler(this, &ChangingForm::confirmationBtn_Click);
 			// 
 			// cancelBnt
 			// 
@@ -221,9 +220,9 @@ namespace Notes {
 			this->headerTextBox->Enter += gcnew System::EventHandler(this, &ChangingForm::headerTextBox_Enter);
 			this->headerTextBox->Leave += gcnew System::EventHandler(this, &ChangingForm::headerTextBox_Leave);
 			// 
-			// colorDialog1
+			// colorDialog
 			// 
-			this->colorDialog1->SolidColorOnly = true;
+			this->colorDialog->SolidColorOnly = true;
 			// 
 			// ChangingForm
 			// 
@@ -242,13 +241,16 @@ namespace Notes {
 			this->Controls->Add(this->headerTextBox);
 			this->MinimumSize = System::Drawing::Size(700, 700);
 			this->Name = L"ChangingForm";
-			this->Text = L"ChangingForm";
+			this->Text = L"Изменение заметки";
 			this->Load += gcnew System::EventHandler(this, &ChangingForm::ChangingForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	/*
+	Function called when loading ChangingForm.
+	*/
 	private: System::Void ChangingForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		Note* currNote = DataManipulator::getNotes()->elementAt(selectedIndex);
 		headerTextBox->Text = gcnew String(currNote->header.c_str());
@@ -269,18 +271,32 @@ namespace Notes {
 		}
 		setHintToTextBox(topicTextBox, "Введите тему", Color::Gray);
 	}
+
+	/*
+	Function called when colorpickerBtn button is pressed.
+	*/
 	private: System::Void colorpickerBtn_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (colorDialog1->ShowDialog() != System::Windows::Forms::DialogResult::Cancel)
-			//if (colorDialog1->Color != Drawing::Color::Black) {
-			colorpickerBtn->BackColor = colorDialog1->Color;
-		//}
+		if (colorDialog->ShowDialog() != System::Windows::Forms::DialogResult::Cancel)
+			colorpickerBtn->BackColor = colorDialog->Color;
 	}
+		   
+	/*
+	Function called when cancelBnt button is pressed.
+	*/
 	private: System::Void cancelBnt_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+		   
+	/*
+	Function called when entering the headerTextBox text field.
+	*/
 	private: System::Void headerTextBox_Enter(System::Object^ sender, System::EventArgs^ e) {
 		removeHintFromTextBox(headerTextBox, Color::Red);
 	}
+		   
+	/*
+	Function called when leaving the headerTextBox text field.
+	*/
 	private: System::Void headerTextBox_Leave(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrWhiteSpace(headerTextBox->Text)) {
 			confirmationBtn->BackColor = SystemColors::ControlDark;
@@ -292,9 +308,17 @@ namespace Notes {
 		}
 		setHintToTextBox(headerTextBox, "Введите заголовок", Color::Red);
 	}
+		   
+	/*
+	Function called when entering the topicTextBox text field.
+	*/
 	private: System::Void topicTextBox_Enter(System::Object^ sender, System::EventArgs^ e) {
 		removeHintFromTextBox(topicTextBox, Color::Gray);
 	}
+		   
+	/*
+	Function called when leaving the topicTextBox text field.
+	*/
 	private: System::Void topicTextBox_Leave(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrWhiteSpace(topicTextBox->Text)) {
 			colorpickerBtn->BackColor = SystemColors::ControlDark;
@@ -309,13 +333,25 @@ namespace Notes {
 		}
 		setHintToTextBox(topicTextBox, "Введите тему", Color::Gray);
 	}
+		   
+	/*
+	Function called when entering the bodyTextBox text field.
+	*/
 	private: System::Void bodyTextBox_Enter(System::Object^ sender, System::EventArgs^ e) {
 		removeHintFromTextBox(bodyTextBox, Color::Gray);
 	}
+		   
+	/*
+	Function called when leaving the bodyTextBox text field.
+	*/
 	private: System::Void bodyTextBox_Leave(System::Object^ sender, System::EventArgs^ e) {
 		setHintToTextBox(bodyTextBox, "Введите содержание", Color::Gray);
 	}
-	private: System::Void confirmationBtnBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		   
+	/*
+	Function called when confirmationBtn button is pressed.
+	*/
+	private: System::Void confirmationBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrWhiteSpace(headerTextBox->Text))
 			return;
 		std::string header = msclr::interop::marshal_as<std::string>(headerTextBox->Text);
@@ -328,6 +364,10 @@ namespace Notes {
 		DataManipulator::changeNote(selectedIndex, Note(header, body, Topic(topic, colorpickerBtn->BackColor.ToArgb())));
 		this->Close();
 	}
+		   
+	/*
+	Function called when the text in the headerTextBox text field changes.
+	*/
 	private: System::Void headerTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		if (headerTextBox->Focused) {
 			if (String::IsNullOrWhiteSpace(headerTextBox->Text)) {
@@ -340,6 +380,10 @@ namespace Notes {
 			}
 		}
 	}
+		   
+	/*
+	Function called when the text in the topicTextBox text field changes.
+	*/
 	private: System::Void topicTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		if (topicTextBox->Focused) {
 			if (String::IsNullOrWhiteSpace(topicTextBox->Text)) {

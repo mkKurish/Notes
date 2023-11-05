@@ -13,17 +13,27 @@ using json = nlohmann::json;
 struct AppSettings {
 private:
 	static bool safeDelete;
-	static bool displayByThemes;
+	static bool displayByTopics;
 	static string* selectedTopics;
 	static int countOfSelectedTopics;
 public:
+	/*
+	Setting default settings.
+	*/
 	static void defaultSettings() {
 		safeDelete = true;
-		displayByThemes = false;
+		displayByTopics = false;
 		selectedTopics = nullptr;
 		countOfSelectedTopics = 0;
 		saveSettings();
 	}
+
+	/*
+	Attempt to load saved settings.
+
+	If there is a file "appSettings.json" and it is not empty,
+	it is read and the downloaded settings are installed.
+	*/
 	static void loadSettings() {
 		ifstream inputFile;
 		inputFile.open("appSettings.json");
@@ -31,7 +41,7 @@ public:
 			json jsonHolder;
 			inputFile >> jsonHolder;
 			safeDelete = jsonHolder["safeDelete"];
-			displayByThemes = jsonHolder["displayByThemes"];
+			displayByTopics = jsonHolder["displayByTopics"];
 			countOfSelectedTopics = jsonHolder["countOfSelectedTopics"];
 			if (countOfSelectedTopics == 0)
 				selectedTopics = nullptr;
@@ -44,10 +54,16 @@ public:
 			defaultSettings();
 		inputFile.close();
 	}
+
+	/*
+	Saving settings.
+
+	Writing the settings values to the "appSettings.json" file.
+	*/
 	static void saveSettings() {
 		json jsonHolder;
 		jsonHolder["safeDelete"] = safeDelete;
-		jsonHolder["displayByThemes"] = displayByThemes;
+		jsonHolder["displayByTopics"] = displayByTopics;
 		for (int i = 0; i < countOfSelectedTopics; i++) {
 			jsonHolder["selectedTopic" + to_string(i)] = selectedTopics[i];
 		}
@@ -57,13 +73,35 @@ public:
 		outputFile << jsonHolder.dump();
 		outputFile.close();
 	}
-	static void setSafeDelete() { safeDelete = true; saveSettings(); }
-	static void setUnsafeDelete() { safeDelete = false; saveSettings(); }
+
+	/*
+	Changing the safe deletion setting state.
+	*/
 	static void changeStateSafeDelete() { safeDelete = !safeDelete; saveSettings(); }
+
+	/*
+	Receiving the safe deletion setting state.
+	*/
 	static bool isSafeDelete() { return safeDelete; }
-	static void setDisplayThemesMode(bool state) { displayByThemes = state; saveSettings(); }
-	static bool getDisplayThemesMode() { return displayByThemes; }
+
+	/*
+	Setting state of the display mode by themes.
+	*/
+	static void setDisplayTopicsMode(bool state) { displayByTopics = state; saveSettings(); }
+
+	/*
+	Checking if the display mode set to display by topics.
+	*/
+	static bool isDisplayTopicsMode() { return displayByTopics; }
+
+	/*
+	Getting the array of selected topics.
+	*/
 	static string* getSelectedTopics() { return selectedTopics; }
+
+	/*
+	Adding the topic to the array of selected topics. 
+	*/
 	static void addTopicInSelected(string topic) { 
 		countOfSelectedTopics++;
 		string* temp = selectedTopics;
@@ -75,24 +113,33 @@ public:
 		selectedTopics[i] = topic;
 		saveSettings();
 	}
-	static bool topicIsSelected(string topic) {
+
+	/*
+	Checking if topic is selected.
+	*/
+	static bool isTopicSelected(string topic) {
 		for (int i = 0; i < countOfSelectedTopics; i++) {
 			if (selectedTopics[i] == topic)
 				return true;
 		}
 		return false;
 	}
+
+	/*
+	Unselecting the topic, if it is selected.
+	*/
 	static void unselectTopic(string topic) {
-		if (!topicIsSelected(topic))
+		if (!isTopicSelected(topic))
 			return;
 		string* temp = selectedTopics;
 		countOfSelectedTopics--;
 		selectedTopics = new string[countOfSelectedTopics];
-		bool flag = true;
+		// This flag is used to check that the chosen topic has not been unselected yet.
+		bool notUnselected = true;
 		for (int i = 0; i <= countOfSelectedTopics; i++) {
-			if (flag) {
+			if (notUnselected) {
 				if (temp[i] == topic)
-					flag = false;
+					notUnselected = false;
 				else
 					selectedTopics[i] = temp[i];
 			}
@@ -102,10 +149,18 @@ public:
 		}
 		saveSettings();
 	}
+
+	/*
+	Unselecting all selected topics.
+	*/
 	static void unselectAllTopics() {
 		selectedTopics = nullptr;
 		countOfSelectedTopics = 0;
 		saveSettings();
 	}
+
+	/*
+	Receiving the count of selected topics.
+	*/
 	static int getCountOfSelectedTopics() { return countOfSelectedTopics; }
 };

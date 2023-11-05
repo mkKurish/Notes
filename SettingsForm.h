@@ -36,19 +36,10 @@ namespace Notes {
 			}
 		}
 
-	protected:
-
 	private: System::Windows::Forms::CheckBox^ checkBoxSafeDeletion;
 
-
 	private: System::Windows::Forms::Button^ resetBtn;
-	private: System::Windows::Forms::Label^ label1;
-
-
-
-
-	protected:
-
+	private: System::Windows::Forms::Label^ labelInfo;
 
 	private:
 		/// <summary>
@@ -65,7 +56,7 @@ namespace Notes {
 		{
 			this->checkBoxSafeDeletion = (gcnew System::Windows::Forms::CheckBox());
 			this->resetBtn = (gcnew System::Windows::Forms::Button());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->labelInfo = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// checkBoxSafeDeletion
@@ -73,7 +64,7 @@ namespace Notes {
 			this->checkBoxSafeDeletion->AutoSize = true;
 			this->checkBoxSafeDeletion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->checkBoxSafeDeletion->Location = System::Drawing::Point(38, 38);
+			this->checkBoxSafeDeletion->Location = System::Drawing::Point(93, 38);
 			this->checkBoxSafeDeletion->Name = L"checkBoxSafeDeletion";
 			this->checkBoxSafeDeletion->Size = System::Drawing::Size(295, 33);
 			this->checkBoxSafeDeletion->TabIndex = 1;
@@ -87,7 +78,7 @@ namespace Notes {
 			this->resetBtn->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->resetBtn->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->resetBtn->Location = System::Drawing::Point(38, 182);
+			this->resetBtn->Location = System::Drawing::Point(93, 182);
 			this->resetBtn->Name = L"resetBtn";
 			this->resetBtn->Size = System::Drawing::Size(295, 50);
 			this->resetBtn->TabIndex = 3;
@@ -95,52 +86,67 @@ namespace Notes {
 			this->resetBtn->UseVisualStyleBackColor = false;
 			this->resetBtn->Click += gcnew System::EventHandler(this, &SettingsForm::resetBtn_Click);
 			// 
-			// label1
+			// labelInfo
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->labelInfo->AutoSize = true;
+			this->labelInfo->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
-			this->label1->Location = System::Drawing::Point(33, 104);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(305, 75);
-			this->label1->TabIndex = 4;
-			this->label1->Text = L"меняет безопасное удаление, \r\nвыбор заметок по темам, \r\nотображение по датам/тема"
+			this->labelInfo->ForeColor = System::Drawing::SystemColors::ControlDarkDark;
+			this->labelInfo->Location = System::Drawing::Point(88, 104);
+			this->labelInfo->Name = L"labelInfo";
+			this->labelInfo->Size = System::Drawing::Size(305, 75);
+			this->labelInfo->TabIndex = 4;
+			this->labelInfo->Text = L"меняет безопасное удаление, \r\nвыбор заметок по темам, \r\nотображение по датам/тема"
 				L"м";
-			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->labelInfo->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// SettingsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(378, 244);
-			this->Controls->Add(this->label1);
+			this->ClientSize = System::Drawing::Size(478, 244);
+			this->Controls->Add(this->labelInfo);
 			this->Controls->Add(this->resetBtn);
 			this->Controls->Add(this->checkBoxSafeDeletion);
 			this->MaximizeBox = false;
-			this->MaximumSize = System::Drawing::Size(400, 300);
-			this->MinimumSize = System::Drawing::Size(400, 300);
+			this->MaximumSize = System::Drawing::Size(500, 300);
+			this->MinimumSize = System::Drawing::Size(500, 300);
 			this->Name = L"SettingsForm";
-			this->Text = L"SettingsForm";
+			this->Text = L"Настройки";
 			this->Load += gcnew System::EventHandler(this, &SettingsForm::SettingsForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	/*
+	Updating state of interface objects linked to the settings data.
+	*/
 	private: System::Void redrawSettings() {
 		if (AppSettings::isSafeDelete())
 			checkBoxSafeDeletion->CheckState = CheckState::Checked;
 	}
+
+	/*
+	Function called when checkBoxSafeDeletion checkbox changes the value.
+	*/
 	private: System::Void checkBoxSafeDeletion_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		if (AppSettings::isSafeDelete() != checkBoxSafeDeletion->Checked)
 			AppSettings::changeStateSafeDelete();
 	}
+
+	/*
+	Function called when the resetBtn button is pressed.
+	*/
 	private: System::Void resetBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		AppSettings::defaultSettings();
 		redrawSettings();
 	}
+
+	/*
+	Function called when loading the SettingsForm.
+	*/
 	private: System::Void SettingsForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		redrawSettings();
 	}
