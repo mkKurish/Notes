@@ -194,6 +194,7 @@ namespace Notes {
 			this->Controls->Add(this->notesListBox);
 			this->Controls->Add(this->menuStrip);
 			this->DoubleBuffered = true;
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip;
 			this->MinimumSize = System::Drawing::Size(1100, 700);
 			this->Name = L"MainForm";

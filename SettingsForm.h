@@ -54,6 +54,7 @@ namespace Notes {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(SettingsForm::typeid));
 			this->checkBoxSafeDeletion = (gcnew System::Windows::Forms::CheckBox());
 			this->resetBtn = (gcnew System::Windows::Forms::Button());
 			this->labelInfo = (gcnew System::Windows::Forms::Label());
@@ -109,6 +110,7 @@ namespace Notes {
 			this->Controls->Add(this->labelInfo);
 			this->Controls->Add(this->resetBtn);
 			this->Controls->Add(this->checkBoxSafeDeletion);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->MaximumSize = System::Drawing::Size(500, 300);
 			this->MinimumSize = System::Drawing::Size(500, 300);

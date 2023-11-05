@@ -53,6 +53,7 @@ namespace Notes {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DeletionConfirmationForm::typeid));
 			this->cancelBtn = (gcnew System::Windows::Forms::Button());
 			this->confirmBtn = (gcnew System::Windows::Forms::Button());
 			this->labelInfo = (gcnew System::Windows::Forms::Label());
@@ -102,6 +103,7 @@ namespace Notes {
 			this->Controls->Add(this->labelInfo);
 			this->Controls->Add(this->confirmBtn);
 			this->Controls->Add(this->cancelBtn);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MaximizeBox = false;
 			this->MaximumSize = System::Drawing::Size(500, 300);
 			this->MinimumSize = System::Drawing::Size(500, 300);

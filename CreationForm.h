@@ -66,6 +66,7 @@ namespace Notes {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(CreationForm::typeid));
 			this->headerTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->topicTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->cancelBnt = (gcnew System::Windows::Forms::Button());
@@ -235,6 +236,7 @@ namespace Notes {
 			this->Controls->Add(this->cancelBnt);
 			this->Controls->Add(this->topicTextBox);
 			this->Controls->Add(this->headerTextBox);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MinimumSize = System::Drawing::Size(700, 700);
 			this->Name = L"CreationForm";
 			this->Text = L"Создание заметки";

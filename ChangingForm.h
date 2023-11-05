@@ -69,6 +69,7 @@ namespace Notes {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ChangingForm::typeid));
 			this->colorpickerBtn = (gcnew System::Windows::Forms::Button());
 			this->labelColor = (gcnew System::Windows::Forms::Label());
 			this->bodyTextBox = (gcnew System::Windows::Forms::RichTextBox());
@@ -239,6 +240,7 @@ namespace Notes {
 			this->Controls->Add(this->cancelBnt);
 			this->Controls->Add(this->topicTextBox);
 			this->Controls->Add(this->headerTextBox);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MinimumSize = System::Drawing::Size(700, 700);
 			this->Name = L"ChangingForm";
 			this->Text = L"Изменение заметки";

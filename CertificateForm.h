@@ -51,6 +51,7 @@ namespace Notes {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(CertificateForm::typeid));
 			this->returnBtn = (gcnew System::Windows::Forms::Button());
 			this->faqListBox = (gcnew System::Windows::Forms::ListBox());
 			this->SuspendLayout();
@@ -91,6 +92,7 @@ namespace Notes {
 			this->ClientSize = System::Drawing::Size(478, 444);
 			this->Controls->Add(this->faqListBox);
 			this->Controls->Add(this->returnBtn);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MinimumSize = System::Drawing::Size(500, 500);
 			this->Name = L"CertificateForm";
 			this->Text = L"Справка";
