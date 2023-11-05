@@ -298,6 +298,7 @@ namespace Notes {
 				return;
 			}
 		}
+		// Tuple of next values: header, body, topic name, topic color, time, index in mainList
 		ind = ((Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[notesListBox->SelectedIndex])->Item6;
 		if (DataManipulator::getTopics()->getExistingTopicsNotesList(DataManipulator::getNotes()->elementAt(ind)->topic.name)->getSize() == 1)
 			AppSettings::unselectTopic(DataManipulator::getNotes()->elementAt(ind)->topic.name);
@@ -359,6 +360,7 @@ namespace Notes {
 	private: System::Void notesListBox_DrawItem(System::Object^ sender, System::Windows::Forms::DrawItemEventArgs^ e) {
 		if (e->Index == -1)
 			return;
+		// Tuple of next values: header, body, topic name, topic color, time, index in mainList
 		Tuple<String^, String^, String^, Color, String^, int>^ dataItem = (Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[e->Index];
 
 		Color topicColor = dataItem->Item4;
@@ -473,6 +475,7 @@ namespace Notes {
 		if (notesListBox->SelectedIndex == -1)
 			return;
 		ChangingForm chform;
+		// Tuple of next values: header, body, topic name, topic color, time, index in mainList
 		chform.selectedIndex = ((Tuple<String^, String^, String^, Color, String^, int>^)notesListBox->Items[notesListBox->SelectedIndex])->Item6;
 		chform.ShowDialog();
 		updateNotesDataMainForm();
