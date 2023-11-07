@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "DataManipulator.h"
 #include "CreationForm.h"
 #include "AppSettings.h"

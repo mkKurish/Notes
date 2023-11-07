@@ -328,7 +328,10 @@ namespace Notes {
 			colorpickerBtn->Text = gcnew String("нет цвета");
 		}
 		else {
-			if (colorpickerBtn->BackColor == SystemColors::ControlDark)
+			std::string tempTopic = msclr::interop::marshal_as<std::string>(topicTextBox->Text);
+			if (DataManipulator::getTopics()->isTopicExists(tempTopic))
+				colorpickerBtn->BackColor = Color::FromArgb(DataManipulator::getTopics()->getExistingTopic(tempTopic).colorARGB);
+			else if (colorpickerBtn->BackColor == SystemColors::ControlDark)
 				colorpickerBtn->BackColor = SystemColors::Control;
 			colorpickerBtn->Enabled = true;
 			colorpickerBtn->Text = gcnew String("");
@@ -394,7 +397,10 @@ namespace Notes {
 				colorpickerBtn->Text = gcnew String("нет цвета");
 			}
 			else {
-				if (colorpickerBtn->BackColor == SystemColors::ControlDark)
+				std::string tempTopic = msclr::interop::marshal_as<std::string>(topicTextBox->Text);
+				if (DataManipulator::getTopics()->isTopicExists(tempTopic))
+					colorpickerBtn->BackColor = Color::FromArgb(DataManipulator::getTopics()->getExistingTopic(tempTopic).colorARGB);
+				else if (colorpickerBtn->BackColor == SystemColors::ControlDark)
 					colorpickerBtn->BackColor = SystemColors::Control;
 				colorpickerBtn->Enabled = true;
 				colorpickerBtn->Text = gcnew String("");
