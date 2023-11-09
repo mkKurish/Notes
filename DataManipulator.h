@@ -2,6 +2,7 @@
 #include "CustomStructures.h"
 #include "json.hpp"
 #include <fstream>
+#include "StringCoding.h"
 #include <string>
 
 using std::to_string;
@@ -54,9 +55,9 @@ public:
 			if (inputFile.peek() != ifstream::traits_type::eof()) {
 				inputFile >> jsonHolder;
 				for (int i = 0; i < jsonHolder.size(); i++) {
-					Note newNote(jsonHolder["note" + to_string(i)]["header"],
-						jsonHolder["note" + to_string(i)]["body"],
-						Topic(jsonHolder["note" + to_string(i)]["topic"]["name"],
+					Note newNote(unconvertUTF8(jsonHolder["note" + to_string(i)]["header"]),
+						unconvertUTF8(jsonHolder["note" + to_string(i)]["body"]),
+						Topic(unconvertUTF8(jsonHolder["note" + to_string(i)]["topic"]["name"]),
 							jsonHolder["note" + to_string(i)]["topic"]["colorARGB"]));
 					newNote.indexInMainList = mainData.getSize();
 					newNote.creationTime = jsonHolder["note" + to_string(i)]["creationTime"];
@@ -79,12 +80,12 @@ public:
 		for (int i = 0; i < mainData.getSize(); i++) {
 			n = mainData.elementAt(i);
 			jsonHolder["note" + to_string(i)] = {
-				{"header", n->header},
+				{"header", convertUTF8(n->header)},
 				{"topic",
-					{{"name", n->topic.name},
+					{{"name", convertUTF8(n->topic.name)},
 					{"colorARGB", n->topic.colorARGB}}
 				},
-				{"body", n->body},
+				{"body", convertUTF8(n->body)},
 				{"creationTime", n->creationTime}
 			};
 		}
@@ -111,7 +112,10 @@ public:
 	static void changeNote(int index, Note newValues) {
 		Note* changingNote = mainData.elementAt(index);
 		if (newValues.topic.name != changingNote->topic.name) {
-			topicsData.getExistingTopicsNotesList(changingNote->topic.name)->remove(changingNote);
+			if (topicsData.getExistingTopicsNotesList(changingNote->topic.name)->getSize() == 1)
+				topicsData.removeByTopic(changingNote->topic);
+			else
+				topicsData.getExistingTopicsNotesList(changingNote->topic.name)->remove(changingNote);
 			changingNote->topic.name = newValues.topic.name;
 			setTopicToNote(changingNote, changingNote->topic);
 		}

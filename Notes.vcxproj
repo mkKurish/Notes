@@ -158,6 +158,7 @@
     <ClInclude Include="SettingsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="StringCoding.h" />
     <ClInclude Include="UIInstruments.h" />
   </ItemGroup>
   <ItemGroup>

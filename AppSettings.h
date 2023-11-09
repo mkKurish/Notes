@@ -2,6 +2,7 @@
 #include "json.hpp"
 #include <fstream>
 #include <string>
+#include "StringCoding.h"
 
 
 using std::string;
@@ -48,7 +49,7 @@ public:
 			else {
 				selectedTopics = new string[countOfSelectedTopics];
 				for (int i = 0; i < countOfSelectedTopics; i++)
-					selectedTopics[i] = jsonHolder["selectedTopic" + to_string(i)];
+					selectedTopics[i] = unconvertUTF8(jsonHolder["selectedTopic" + to_string(i)]);
 			}
 		}else
 			defaultSettings();
@@ -65,7 +66,7 @@ public:
 		jsonHolder["safeDelete"] = safeDelete;
 		jsonHolder["displayByTopics"] = displayByTopics;
 		for (int i = 0; i < countOfSelectedTopics; i++) {
-			jsonHolder["selectedTopic" + to_string(i)] = selectedTopics[i];
+			jsonHolder["selectedTopic" + to_string(i)] = convertUTF8(selectedTopics[i]);
 		}
 		jsonHolder["countOfSelectedTopics"] = countOfSelectedTopics;
 		ofstream outputFile;
