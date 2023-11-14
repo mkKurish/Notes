@@ -14,6 +14,30 @@ An application that helps the user to organize notes. The following functions ar
 The application has an intuitive visual interface\
 Supported menu language: **Russian**
 
+### Overview
+
+> On the main screen there is a list of notes, buttons for managing them, and so on\
+> In the picture below, the lists are displayed in the order of creation (new ones on top)
+
+<img src="https://github.com/mkKurish/Notes/blob/main/demonstration/sh1.png" alt="drawing" width="450"/>
+
+> You can change the display mode to display "by topic"
+
+<img src="https://github.com/mkKurish/Notes/blob/main/demonstration/sh2.png" alt="drawing" width="100"/>
+
+> Here's what you'll get
+
+<img src="https://github.com/mkKurish/Notes/blob/main/demonstration/sh3.png" alt="drawing" width="450"/>
+
+> The form for creating a note looks simple\
+> Hints help you understand how to fill out the form
+
+<img src="https://github.com/mkKurish/Notes/blob/main/demonstration/sh4.png" alt="drawing" width="300"/>
+
+> When you change a note (to do this, click on the note in the list twice), you have a similar form in front of you
+
+<img src="https://github.com/mkKurish/Notes/blob/main/demonstration/sh5.png" alt="drawing" width="300"/>
+
 ### Development
 
 Used in the development
