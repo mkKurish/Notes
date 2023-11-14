@@ -1,0 +1,6 @@
+! .gitignore
+/x64
+/.vs
+notesData.json
+appSettings.json
+json.hpp
