@@ -74,5 +74,5 @@ The program has perspectives of development. A small list of future functionalit
 - setting the font size and type change in the entire application or in its individual parts
 - setting up the change of the general graphic theme of the application (light theme and dark theme)
 - deleting notes to the “trash”
-- уxpanding the number of supported menu languages
+- expanding the number of supported menu languages
 - вata synchronization using a system of accounts and remote servers
