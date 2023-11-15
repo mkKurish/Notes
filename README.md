@@ -53,7 +53,7 @@ Used in the development
 The following **variable naming** convention is used in the project code:\
 - variable names have the style “camel case” together with “lower case", for example, “mainData“ or ”SolidBrush"
 - function names also have the style “camel case” together with “lower case”, for example, “removeByTopic“ or ”loadData"
-- The names of classes (structures) have the style “camel case” together with “lower case”, except for the first letter, it is capitalized. An example is “DataManipulator" and “Note"
+- the names of classes (structures) have the style “camel case” together with “lower case”, except for the first letter, it is capitalized. An example is “DataManipulator" and “Note"
 
 The general **design style of the program code** corresponds to the following points:\
 - each nested block of code is one indent “tab" above the parent block
@@ -75,4 +75,4 @@ The program has perspectives of development. A small list of future functionalit
 - setting up the change of the general graphic theme of the application (light theme and dark theme)
 - deleting notes to the “trash”
 - expanding the number of supported menu languages
-- вata synchronization using a system of accounts and remote servers
+- data synchronization using a system of accounts and remote servers
