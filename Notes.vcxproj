@@ -129,10 +129,13 @@
     <ClCompile Include="CertificateForm.cpp" />
     <ClCompile Include="ChangingForm.cpp" />
     <ClCompile Include="CreationForm.cpp" />
+    <ClCompile Include="CustomStructures.cpp" />
     <ClCompile Include="DataManipulator.cpp" />
     <ClCompile Include="DeletionConfirmationForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="SettingsForm.cpp" />
+    <ClCompile Include="StringCoding.cpp" />
+    <ClCompile Include="UIInstruments.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h" />
